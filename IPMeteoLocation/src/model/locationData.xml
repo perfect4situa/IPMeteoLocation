@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query>
+    <status>success</status>
+    <country><![CDATA[COUNTRY]]></country>
+    <countryCode><![CDATA[COUNTRY CODE]]></countryCode>
+    <region><![CDATA[REGION CODE]]></region>
+    <regionName><![CDATA[REGION NAME]]></regionName>
+    <city><![CDATA[CITY]]></city>
+    <zip><![CDATA[ZIP CODE]]></zip>
+    <lat><![CDATA[LATITUDE]]></lat>
+    <lon><![CDATA[LONGITUDE]]></lon>
+    <timezone><![CDATA[TIME ZONE]]></timezone>
+    <isp><![CDATA[ISP NAME]]></isp>
+    <org><![CDATA[ORGANIZATION NAME]]></org>
+    <as><![CDATA[AS NUMBER / NAME]]></as>
+    <query><![CDATA[IP ADDRESS USED FOR QUERY]]></query>
+</query>
