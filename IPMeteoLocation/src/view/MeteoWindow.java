@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class MeteoWindow extends JFrame {
@@ -17,7 +18,8 @@ public class MeteoWindow extends JFrame {
 	private JPanel contentPane;
 	private JPanel panel;
 	private JLabel lblInfo;
-	private JPanelImg panelImg;
+	private ImageIcon img;
+	private JLabel lblImg;
 	private JButton btnIndietro;
 	private JLabel lblprevisioni;
 	private JButton btnAvanti;
@@ -64,11 +66,12 @@ public class MeteoWindow extends JFrame {
 		lblInfo.setBounds(10, 11, 424, 23);
 		panel.add(lblInfo);
 		
-		panelImg = new JPanelImg("../IPMeteoLocation/src/view/spazio_immagine.png");
-		panelImg.setToolTipText("Immagine meteo");
-		panelImg.setBounds(107, 45, 229, 72);
-		panel.add(panelImg);
-		panelImg.setLayout(null);
+		img = new ImageIcon("../IPMeteoLocation/src/view/spazio_immagine.png");
+		lblImg = new JLabel(img);
+		lblImg.setToolTipText("Immagine meteo");
+		lblImg.setBounds(107, 45, 229, 72);
+		panel.add(lblImg);
+		lblImg.setLayout(null);
 		
 		btnIndietro = new JButton("<");
 		btnIndietro.setToolTipText("Indietro");
