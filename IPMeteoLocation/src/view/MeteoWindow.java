@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class MeteoWindow extends JFrame {
@@ -18,7 +17,6 @@ public class MeteoWindow extends JFrame {
 	private JPanel contentPane;
 	private JPanel panel;
 	private JLabel lblInfo;
-	private ImageIcon img;
 	private JLabel lblImg;
 	private JButton btnIndietro;
 	private JLabel lblprevisioni;
@@ -49,7 +47,7 @@ public class MeteoWindow extends JFrame {
 		setTitle("Meteo");
 		setResizable(false);
 		setAlwaysOnTop(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 287);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
@@ -66,9 +64,9 @@ public class MeteoWindow extends JFrame {
 		lblInfo.setBounds(10, 11, 424, 23);
 		panel.add(lblInfo);
 		
-		img = new ImageIcon("../IPMeteoLocation/src/view/spazio_immagine.png");
-		lblImg = new JLabel(img);
+		lblImg = new JLabel();
 		lblImg.setToolTipText("Immagine meteo");
+		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImg.setBounds(107, 45, 229, 72);
 		panel.add(lblImg);
 		lblImg.setLayout(null);
@@ -89,7 +87,7 @@ public class MeteoWindow extends JFrame {
 		btnAvanti.setBounds(384, 139, 50, 23);
 		panel.add(btnAvanti);
 		
-		btnEsci = new JButton("Esci");
+		btnEsci = new JButton("Chiudi");
 		btnEsci.setToolTipText("Chiudi il servizio");
 		btnEsci.setBounds(70, 211, 89, 23);
 		panel.add(btnEsci);
@@ -98,5 +96,61 @@ public class MeteoWindow extends JFrame {
 		btnMeteo.setToolTipText("Cerca il meteo di una localit\u00E0");
 		btnMeteo.setBounds(285, 211, 89, 23);
 		panel.add(btnMeteo);
+	}
+
+	public JLabel getLblInfo() {
+		return lblInfo;
+	}
+
+	public void setLblInfo(JLabel lblInfo) {
+		this.lblInfo = lblInfo;
+	}
+
+	public JLabel getLblImg() {
+		return lblImg;
+	}
+
+	public void setLblImg(JLabel lblImg) {
+		this.lblImg = lblImg;
+	}
+
+	public JButton getBtnIndietro() {
+		return btnIndietro;
+	}
+
+	public void setBtnIndietro(JButton btnIndietro) {
+		this.btnIndietro = btnIndietro;
+	}
+
+	public JLabel getLblprevisioni() {
+		return lblprevisioni;
+	}
+
+	public void setLblprevisioni(JLabel lblprevisioni) {
+		this.lblprevisioni = lblprevisioni;
+	}
+
+	public JButton getBtnAvanti() {
+		return btnAvanti;
+	}
+
+	public void setBtnAvanti(JButton btnAvanti) {
+		this.btnAvanti = btnAvanti;
+	}
+
+	public JButton getBtnEsci() {
+		return btnEsci;
+	}
+
+	public void setBtnEsci(JButton btnEsci) {
+		this.btnEsci = btnEsci;
+	}
+
+	public JButton getBtnMeteo() {
+		return btnMeteo;
+	}
+
+	public void setBtnMeteo(JButton btnMeteo) {
+		this.btnMeteo = btnMeteo;
 	}
 }
