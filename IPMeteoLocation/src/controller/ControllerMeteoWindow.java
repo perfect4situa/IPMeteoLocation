@@ -11,16 +11,17 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import model.Previsione;
 import model.Weather;
 import view.MeteoWindow;
 
 public class ControllerMeteoWindow implements ActionListener {
 	
-	private Weather model;
+	private Previsione model;
 	private MeteoWindow view;
 	private int num = 0;
 	
-	public ControllerMeteoWindow(Weather model, MeteoWindow view) {
+	public ControllerMeteoWindow(Previsione model, MeteoWindow view) {
 		view.getBtnIndietro().addActionListener(this);
 		view.getBtnAvanti().addActionListener(this);
 		view.getBtnEsci().addActionListener(this);

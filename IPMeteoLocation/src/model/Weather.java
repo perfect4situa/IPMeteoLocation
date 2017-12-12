@@ -1,12 +1,11 @@
+package model;
 //
 // Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2017.12.11 alle 12:42:20 PM CET 
+// Generato il: 2017.12.12 alle 06:31:38 PM CET 
 //
 
-
-package model;
 
 import java.math.BigDecimal;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -63,7 +62,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
  *                   &lt;element name="lastupdate" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *                   &lt;element name="calctime" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                   &lt;element name="calctime" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *                   &lt;element name="nextupdate" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *                 &lt;/sequence>
  *               &lt;/restriction>
@@ -1611,7 +1610,7 @@ public class Weather {
         @XmlElement(required = true)
         protected String timezone;
         @XmlElement(required = true)
-        protected Weather.Location.LocationData location;
+        protected Weather.Location.LocationData locationData;
 
         /**
          * Recupera il valore della proprietà name.
@@ -1710,27 +1709,27 @@ public class Weather {
         }
 
         /**
-         * Recupera il valore della proprietà location.
+         * Recupera il valore della proprietà locationData.
          * 
          * @return
          *     possible object is
-         *     {@link Weather.Location.Location }
+         *     {@link Weather.Location.LocationData }
          *     
          */
-        public Weather.Location.LocationData getLocation() {
-            return location;
+        public Weather.Location.LocationData getLocationData() {
+            return locationData;
         }
 
         /**
-         * Imposta il valore della proprietà location.
+         * Imposta il valore della proprietà locationData.
          * 
          * @param value
          *     allowed object is
-         *     {@link Weather.Location.Location }
+         *     {@link Weather.Location.LocationData }
          *     
          */
-        public void setLocation(Weather.Location.LocationData value) {
-            this.location = value;
+        public void setLocationData(Weather.Location.LocationData value) {
+            this.locationData = value;
         }
 
 
@@ -1906,7 +1905,7 @@ public class Weather {
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
      *         &lt;element name="lastupdate" type="{http://www.w3.org/2001/XMLSchema}string"/>
-     *         &lt;element name="calctime" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *         &lt;element name="calctime" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
      *         &lt;element name="nextupdate" type="{http://www.w3.org/2001/XMLSchema}string"/>
      *       &lt;/sequence>
      *     &lt;/restriction>
@@ -1927,7 +1926,7 @@ public class Weather {
         @XmlElement(required = true)
         protected String lastupdate;
         @XmlElement(required = true)
-        protected String calctime;
+        protected BigDecimal calctime;
         @XmlElement(required = true)
         protected String nextupdate;
 
@@ -1960,10 +1959,10 @@ public class Weather {
          * 
          * @return
          *     possible object is
-         *     {@link String }
+         *     {@link BigDecimal }
          *     
          */
-        public String getCalctime() {
+        public BigDecimal getCalctime() {
             return calctime;
         }
 
@@ -1972,10 +1971,10 @@ public class Weather {
          * 
          * @param value
          *     allowed object is
-         *     {@link String }
+         *     {@link BigDecimal }
          *     
          */
-        public void setCalctime(String value) {
+        public void setCalctime(BigDecimal value) {
             this.calctime = value;
         }
 
