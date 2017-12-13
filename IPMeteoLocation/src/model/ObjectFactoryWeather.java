@@ -1,11 +1,12 @@
-package model;
 //
 // Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2017.12.12 alle 06:31:38 PM CET 
+// Generato il: 2017.12.13 alle 02:42:44 PM CET 
 //
 
+
+package model;
 
 import javax.xml.bind.annotation.XmlRegistry;
 
@@ -89,6 +90,14 @@ public class ObjectFactoryWeather {
      */
     public Weather.Forecast.Time.Symbol createWeatherdataForecastTimeSymbol() {
         return new Weather.Forecast.Time.Symbol();
+    }
+
+    /**
+     * Create an instance of {@link Weather.Forecast.Time.Precipitation }
+     * 
+     */
+    public Weather.Forecast.Time.Precipitation createWeatherdataForecastTimePrecipitation() {
+        return new Weather.Forecast.Time.Precipitation();
     }
 
     /**

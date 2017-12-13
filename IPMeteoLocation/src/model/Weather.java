@@ -1,13 +1,16 @@
-package model;
 //
 // Questo file è stato generato dall'architettura JavaTM per XML Binding (JAXB) Reference Implementation, v2.2.8-b130911.1802 
 // Vedere <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
-// Generato il: 2017.12.12 alle 06:31:38 PM CET 
+// Generato il: 2017.12.13 alle 02:42:44 PM CET 
 //
 
 
+package model;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -84,7 +87,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                 &lt;sequence>
- *                   &lt;element name="time">
+ *                   &lt;element name="time" maxOccurs="unbounded">
  *                     &lt;complexType>
  *                       &lt;complexContent>
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
@@ -100,12 +103,22 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                                 &lt;/complexContent>
  *                               &lt;/complexType>
  *                             &lt;/element>
- *                             &lt;element name="precipitation" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                             &lt;element name="precipitation">
+ *                               &lt;complexType>
+ *                                 &lt;complexContent>
+ *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                                     &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                                     &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+ *                                     &lt;attribute name="type" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                                   &lt;/restriction>
+ *                                 &lt;/complexContent>
+ *                               &lt;/complexType>
+ *                             &lt;/element>
  *                             &lt;element name="windDirection">
  *                               &lt;complexType>
  *                                 &lt;complexContent>
  *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                                     &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}int" />
+ *                                     &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}decimal" />
  *                                     &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                                     &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                                   &lt;/restriction>
@@ -126,12 +139,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                               &lt;complexType>
  *                                 &lt;complexContent>
  *                                   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                                     &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+ *                                     &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                                     &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
  *                                     &lt;attribute name="min" type="{http://www.w3.org/2001/XMLSchema}decimal" />
  *                                     &lt;attribute name="max" type="{http://www.w3.org/2001/XMLSchema}decimal" />
- *                                     &lt;attribute name="night" type="{http://www.w3.org/2001/XMLSchema}decimal" />
- *                                     &lt;attribute name="eve" type="{http://www.w3.org/2001/XMLSchema}decimal" />
- *                                     &lt;attribute name="morn" type="{http://www.w3.org/2001/XMLSchema}decimal" />
  *                                   &lt;/restriction>
  *                                 &lt;/complexContent>
  *                               &lt;/complexType>
@@ -168,7 +179,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                               &lt;/complexType>
  *                             &lt;/element>
  *                           &lt;/sequence>
- *                           &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+ *                           &lt;attribute name="from" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+ *                           &lt;attribute name="to" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
  *                         &lt;/restriction>
  *                       &lt;/complexContent>
  *                     &lt;/complexType>
@@ -339,7 +351,7 @@ public class Weather {
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
-     *         &lt;element name="time">
+     *         &lt;element name="time" maxOccurs="unbounded">
      *           &lt;complexType>
      *             &lt;complexContent>
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
@@ -355,12 +367,22 @@ public class Weather {
      *                       &lt;/complexContent>
      *                     &lt;/complexType>
      *                   &lt;/element>
-     *                   &lt;element name="precipitation" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *                   &lt;element name="precipitation">
+     *                     &lt;complexType>
+     *                       &lt;complexContent>
+     *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *                           &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                           &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+     *                           &lt;attribute name="type" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                         &lt;/restriction>
+     *                       &lt;/complexContent>
+     *                     &lt;/complexType>
+     *                   &lt;/element>
      *                   &lt;element name="windDirection">
      *                     &lt;complexType>
      *                       &lt;complexContent>
      *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                           &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}int" />
+     *                           &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}decimal" />
      *                           &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                           &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
      *                         &lt;/restriction>
@@ -381,12 +403,10 @@ public class Weather {
      *                     &lt;complexType>
      *                       &lt;complexContent>
      *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *                           &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+     *                           &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *                           &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
      *                           &lt;attribute name="min" type="{http://www.w3.org/2001/XMLSchema}decimal" />
      *                           &lt;attribute name="max" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-     *                           &lt;attribute name="night" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-     *                           &lt;attribute name="eve" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-     *                           &lt;attribute name="morn" type="{http://www.w3.org/2001/XMLSchema}decimal" />
      *                         &lt;/restriction>
      *                       &lt;/complexContent>
      *                     &lt;/complexType>
@@ -423,7 +443,8 @@ public class Weather {
      *                     &lt;/complexType>
      *                   &lt;/element>
      *                 &lt;/sequence>
-     *                 &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+     *                 &lt;attribute name="from" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+     *                 &lt;attribute name="to" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
      *               &lt;/restriction>
      *             &lt;/complexContent>
      *           &lt;/complexType>
@@ -443,30 +464,35 @@ public class Weather {
     public static class Forecast {
 
         @XmlElement(required = true)
-        protected Weather.Forecast.Time time;
+        protected List<Weather.Forecast.Time> time;
 
         /**
-         * Recupera il valore della proprietà time.
+         * Gets the value of the time property.
          * 
-         * @return
-         *     possible object is
-         *     {@link Weather.Forecast.Time }
-         *     
-         */
-        public Weather.Forecast.Time getTime() {
-            return time;
-        }
-
-        /**
-         * Imposta il valore della proprietà time.
+         * <p>
+         * This accessor method returns a reference to the live list,
+         * not a snapshot. Therefore any modification you make to the
+         * returned list will be present inside the JAXB object.
+         * This is why there is not a <CODE>set</CODE> method for the time property.
          * 
-         * @param value
-         *     allowed object is
-         *     {@link Weather.Forecast.Time }
-         *     
+         * <p>
+         * For example, to add a new item, do as follows:
+         * <pre>
+         *    getTime().add(newItem);
+         * </pre>
+         * 
+         * 
+         * <p>
+         * Objects of the following type(s) are allowed in the list
+         * {@link Weather.Forecast.Time }
+         * 
+         * 
          */
-        public void setTime(Weather.Forecast.Time value) {
-            this.time = value;
+        public List<Weather.Forecast.Time> getTime() {
+            if (time == null) {
+                time = new ArrayList<Weather.Forecast.Time>();
+            }
+            return this.time;
         }
 
 
@@ -491,12 +517,22 @@ public class Weather {
          *             &lt;/complexContent>
          *           &lt;/complexType>
          *         &lt;/element>
-         *         &lt;element name="precipitation" type="{http://www.w3.org/2001/XMLSchema}string"/>
+         *         &lt;element name="precipitation">
+         *           &lt;complexType>
+         *             &lt;complexContent>
+         *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+         *                 &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *                 &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+         *                 &lt;attribute name="type" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *               &lt;/restriction>
+         *             &lt;/complexContent>
+         *           &lt;/complexType>
+         *         &lt;/element>
          *         &lt;element name="windDirection">
          *           &lt;complexType>
          *             &lt;complexContent>
          *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *                 &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}int" />
+         *                 &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}decimal" />
          *                 &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" />
          *                 &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
          *               &lt;/restriction>
@@ -517,12 +553,10 @@ public class Weather {
          *           &lt;complexType>
          *             &lt;complexContent>
          *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-         *                 &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+         *                 &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+         *                 &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
          *                 &lt;attribute name="min" type="{http://www.w3.org/2001/XMLSchema}decimal" />
          *                 &lt;attribute name="max" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-         *                 &lt;attribute name="night" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-         *                 &lt;attribute name="eve" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-         *                 &lt;attribute name="morn" type="{http://www.w3.org/2001/XMLSchema}decimal" />
          *               &lt;/restriction>
          *             &lt;/complexContent>
          *           &lt;/complexType>
@@ -559,7 +593,8 @@ public class Weather {
          *           &lt;/complexType>
          *         &lt;/element>
          *       &lt;/sequence>
-         *       &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+         *       &lt;attribute name="from" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
+         *       &lt;attribute name="to" type="{http://www.w3.org/2001/XMLSchema}dateTime" />
          *     &lt;/restriction>
          *   &lt;/complexContent>
          * &lt;/complexType>
@@ -583,7 +618,7 @@ public class Weather {
             @XmlElement(required = true)
             protected Weather.Forecast.Time.Symbol symbol;
             @XmlElement(required = true)
-            protected String precipitation;
+            protected Weather.Forecast.Time.Precipitation precipitation;
             @XmlElement(required = true)
             protected Weather.Forecast.Time.WindDirection windDirection;
             @XmlElement(required = true)
@@ -596,9 +631,12 @@ public class Weather {
             protected Weather.Forecast.Time.Humidity humidity;
             @XmlElement(required = true)
             protected Weather.Forecast.Time.Clouds clouds;
-            @XmlAttribute(name = "day")
+            @XmlAttribute(name = "from")
             @XmlSchemaType(name = "dateTime")
-            protected XMLGregorianCalendar day;
+            protected XMLGregorianCalendar from;
+            @XmlAttribute(name = "to")
+            @XmlSchemaType(name = "dateTime")
+            protected XMLGregorianCalendar to;
 
             /**
              * Recupera il valore della proprietà symbol.
@@ -629,10 +667,10 @@ public class Weather {
              * 
              * @return
              *     possible object is
-             *     {@link String }
+             *     {@link Weather.Forecast.Time.Precipitation }
              *     
              */
-            public String getPrecipitation() {
+            public Weather.Forecast.Time.Precipitation getPrecipitation() {
                 return precipitation;
             }
 
@@ -641,10 +679,10 @@ public class Weather {
              * 
              * @param value
              *     allowed object is
-             *     {@link String }
+             *     {@link Weather.Forecast.Time.Precipitation }
              *     
              */
-            public void setPrecipitation(String value) {
+            public void setPrecipitation(Weather.Forecast.Time.Precipitation value) {
                 this.precipitation = value;
             }
 
@@ -793,27 +831,51 @@ public class Weather {
             }
 
             /**
-             * Recupera il valore della proprietà day.
+             * Recupera il valore della proprietà from.
              * 
              * @return
              *     possible object is
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public XMLGregorianCalendar getDay() {
-                return day;
+            public XMLGregorianCalendar getFrom() {
+                return from;
             }
 
             /**
-             * Imposta il valore della proprietà day.
+             * Imposta il valore della proprietà from.
              * 
              * @param value
              *     allowed object is
              *     {@link XMLGregorianCalendar }
              *     
              */
-            public void setDay(XMLGregorianCalendar value) {
-                this.day = value;
+            public void setFrom(XMLGregorianCalendar value) {
+                this.from = value;
+            }
+
+            /**
+             * Recupera il valore della proprietà to.
+             * 
+             * @return
+             *     possible object is
+             *     {@link XMLGregorianCalendar }
+             *     
+             */
+            public XMLGregorianCalendar getTo() {
+                return to;
+            }
+
+            /**
+             * Imposta il valore della proprietà to.
+             * 
+             * @param value
+             *     allowed object is
+             *     {@link XMLGregorianCalendar }
+             *     
+             */
+            public void setTo(XMLGregorianCalendar value) {
+                this.to = value;
             }
 
 
@@ -1011,6 +1073,111 @@ public class Weather {
              *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
              *       &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
              *       &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+             *       &lt;attribute name="type" type="{http://www.w3.org/2001/XMLSchema}string" />
+             *     &lt;/restriction>
+             *   &lt;/complexContent>
+             * &lt;/complexType>
+             * </pre>
+             * 
+             * 
+             */
+            @XmlAccessorType(XmlAccessType.FIELD)
+            @XmlType(name = "")
+            public static class Precipitation {
+
+                @XmlAttribute(name = "unit")
+                protected String unit;
+                @XmlAttribute(name = "value")
+                protected BigDecimal value;
+                @XmlAttribute(name = "type")
+                protected String type;
+
+                /**
+                 * Recupera il valore della proprietà unit.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getUnit() {
+                    return unit;
+                }
+
+                /**
+                 * Imposta il valore della proprietà unit.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setUnit(String value) {
+                    this.unit = value;
+                }
+
+                /**
+                 * Recupera il valore della proprietà value.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link BigDecimal }
+                 *     
+                 */
+                public BigDecimal getValue() {
+                    return value;
+                }
+
+                /**
+                 * Imposta il valore della proprietà value.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link BigDecimal }
+                 *     
+                 */
+                public void setValue(BigDecimal value) {
+                    this.value = value;
+                }
+
+                /**
+                 * Recupera il valore della proprietà type.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getType() {
+                    return type;
+                }
+
+                /**
+                 * Imposta il valore della proprietà type.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setType(String value) {
+                    this.type = value;
+                }
+
+            }
+
+
+            /**
+             * <p>Classe Java per anonymous complex type.
+             * 
+             * <p>Il seguente frammento di schema specifica il contenuto previsto contenuto in questa classe.
+             * 
+             * <pre>
+             * &lt;complexType>
+             *   &lt;complexContent>
+             *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+             *       &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+             *       &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
              *     &lt;/restriction>
              *   &lt;/complexContent>
              * &lt;/complexType>
@@ -1192,12 +1359,10 @@ public class Weather {
              * &lt;complexType>
              *   &lt;complexContent>
              *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-             *       &lt;attribute name="day" type="{http://www.w3.org/2001/XMLSchema}decimal" />
+             *       &lt;attribute name="unit" type="{http://www.w3.org/2001/XMLSchema}string" />
+             *       &lt;attribute name="value" type="{http://www.w3.org/2001/XMLSchema}decimal" />
              *       &lt;attribute name="min" type="{http://www.w3.org/2001/XMLSchema}decimal" />
              *       &lt;attribute name="max" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-             *       &lt;attribute name="night" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-             *       &lt;attribute name="eve" type="{http://www.w3.org/2001/XMLSchema}decimal" />
-             *       &lt;attribute name="morn" type="{http://www.w3.org/2001/XMLSchema}decimal" />
              *     &lt;/restriction>
              *   &lt;/complexContent>
              * &lt;/complexType>
@@ -1209,41 +1374,61 @@ public class Weather {
             @XmlType(name = "")
             public static class Temperature {
 
-                @XmlAttribute(name = "day")
-                protected BigDecimal day;
+                @XmlAttribute(name = "unit")
+                protected String unit;
+                @XmlAttribute(name = "value")
+                protected BigDecimal value;
                 @XmlAttribute(name = "min")
                 protected BigDecimal min;
                 @XmlAttribute(name = "max")
                 protected BigDecimal max;
-                @XmlAttribute(name = "night")
-                protected BigDecimal night;
-                @XmlAttribute(name = "eve")
-                protected BigDecimal eve;
-                @XmlAttribute(name = "morn")
-                protected BigDecimal morn;
 
                 /**
-                 * Recupera il valore della proprietà day.
+                 * Recupera il valore della proprietà unit.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getUnit() {
+                    return unit;
+                }
+
+                /**
+                 * Imposta il valore della proprietà unit.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setUnit(String value) {
+                    this.unit = value;
+                }
+
+                /**
+                 * Recupera il valore della proprietà value.
                  * 
                  * @return
                  *     possible object is
                  *     {@link BigDecimal }
                  *     
                  */
-                public BigDecimal getDay() {
-                    return day;
+                public BigDecimal getValue() {
+                    return value;
                 }
 
                 /**
-                 * Imposta il valore della proprietà day.
+                 * Imposta il valore della proprietà value.
                  * 
                  * @param value
                  *     allowed object is
                  *     {@link BigDecimal }
                  *     
                  */
-                public void setDay(BigDecimal value) {
-                    this.day = value;
+                public void setValue(BigDecimal value) {
+                    this.value = value;
                 }
 
                 /**
@@ -1294,78 +1479,6 @@ public class Weather {
                     this.max = value;
                 }
 
-                /**
-                 * Recupera il valore della proprietà night.
-                 * 
-                 * @return
-                 *     possible object is
-                 *     {@link BigDecimal }
-                 *     
-                 */
-                public BigDecimal getNight() {
-                    return night;
-                }
-
-                /**
-                 * Imposta il valore della proprietà night.
-                 * 
-                 * @param value
-                 *     allowed object is
-                 *     {@link BigDecimal }
-                 *     
-                 */
-                public void setNight(BigDecimal value) {
-                    this.night = value;
-                }
-
-                /**
-                 * Recupera il valore della proprietà eve.
-                 * 
-                 * @return
-                 *     possible object is
-                 *     {@link BigDecimal }
-                 *     
-                 */
-                public BigDecimal getEve() {
-                    return eve;
-                }
-
-                /**
-                 * Imposta il valore della proprietà eve.
-                 * 
-                 * @param value
-                 *     allowed object is
-                 *     {@link BigDecimal }
-                 *     
-                 */
-                public void setEve(BigDecimal value) {
-                    this.eve = value;
-                }
-
-                /**
-                 * Recupera il valore della proprietà morn.
-                 * 
-                 * @return
-                 *     possible object is
-                 *     {@link BigDecimal }
-                 *     
-                 */
-                public BigDecimal getMorn() {
-                    return morn;
-                }
-
-                /**
-                 * Imposta il valore della proprietà morn.
-                 * 
-                 * @param value
-                 *     allowed object is
-                 *     {@link BigDecimal }
-                 *     
-                 */
-                public void setMorn(BigDecimal value) {
-                    this.morn = value;
-                }
-
             }
 
 
@@ -1378,7 +1491,7 @@ public class Weather {
              * &lt;complexType>
              *   &lt;complexContent>
              *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-             *       &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}int" />
+             *       &lt;attribute name="deg" type="{http://www.w3.org/2001/XMLSchema}decimal" />
              *       &lt;attribute name="code" type="{http://www.w3.org/2001/XMLSchema}string" />
              *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
              *     &lt;/restriction>
@@ -1393,7 +1506,7 @@ public class Weather {
             public static class WindDirection {
 
                 @XmlAttribute(name = "deg")
-                protected Integer deg;
+                protected BigDecimal deg;
                 @XmlAttribute(name = "code")
                 protected String code;
                 @XmlAttribute(name = "name")
@@ -1404,10 +1517,10 @@ public class Weather {
                  * 
                  * @return
                  *     possible object is
-                 *     {@link Integer }
+                 *     {@link BigDecimal }
                  *     
                  */
-                public Integer getDeg() {
+                public BigDecimal getDeg() {
                     return deg;
                 }
 
@@ -1416,10 +1529,10 @@ public class Weather {
                  * 
                  * @param value
                  *     allowed object is
-                 *     {@link Integer }
+                 *     {@link BigDecimal }
                  *     
                  */
-                public void setDeg(Integer value) {
+                public void setDeg(BigDecimal value) {
                     this.deg = value;
                 }
 
@@ -1597,7 +1710,7 @@ public class Weather {
         "type",
         "country",
         "timezone",
-        "location"
+        "locationData"
     })
     public static class Location {
 
@@ -1709,26 +1822,26 @@ public class Weather {
         }
 
         /**
-         * Recupera il valore della proprietà locationData.
+         * Recupera il valore della proprietà location.
          * 
          * @return
          *     possible object is
-         *     {@link Weather.Location.LocationData }
+         *     {@link Weather.Location.Location }
          *     
          */
-        public Weather.Location.LocationData getLocationData() {
+        public Weather.Location.LocationData getLocation() {
             return locationData;
         }
 
         /**
-         * Imposta il valore della proprietà locationData.
+         * Imposta il valore della proprietà location.
          * 
          * @param value
          *     allowed object is
-         *     {@link Weather.Location.LocationData }
+         *     {@link Weather.Location.Location }
          *     
          */
-        public void setLocationData(Weather.Location.LocationData value) {
+        public void setLocation(Weather.Location.LocationData value) {
             this.locationData = value;
         }
 

@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -30,15 +31,22 @@ public class ControllerMeteoWindow implements ActionListener {
 		view.setVisible(true);
 		this.model = model;
 		this.view = view;
-		/*URL file = Weather.class.getResource("weatherData.xml");
-		Weather customer;
+		
+		URL file = null;
+		try {
+			file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml&lat=45.6662855&lon=12.2420720&cnt=3&units=metric&lang=it&appid=42b223d0b7441d97bd051375c1c1f0a1");
+		} catch (MalformedURLException e1) {
+			e1.printStackTrace();
+		}
+		Weather customer = null;
 		try {
 			JAXBContext jaxbContext =JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			customer = (Weather) jaxbUnmarshaller.unmarshal(file);
 		} catch (JAXBException e) {
 			e.printStackTrace();
-		}*/
+		}
+		System.out.println(customer.getForecast().getTime().get(0).getPrecipitation().getValue());
 	}
 	
 	public void setImmagineMeteo(int x) {
