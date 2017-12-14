@@ -89,6 +89,8 @@ public class IPWindow extends JFrame {
 		this.btnMeteo.setBounds(489, 149, 115, 35);
 		this.contentPane.add(this.btnMeteo);
 		
+		this.clearInput();
+		
 		this.setVisible(true);
 	}
 
@@ -187,15 +189,21 @@ public class IPWindow extends JFrame {
 		this.getBtnMeteo().addActionListener(x);
 	}
 	
-	public String createFormatter(String format)
+	public MaskFormatter createFormatter(String format)
 	{
-		String maschera=null;
+		MaskFormatter maschera=null;
 		try {
-			maschera = new MaskFormatter(format).getMask();
+			maschera = new MaskFormatter(format);
+			maschera.setPlaceholderCharacter('0');
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
 		return maschera;
+	}
+	
+	public void clearInput()
+	{
+		this.formattedTextField.setText("000.000.000.000");
 	}
 }
