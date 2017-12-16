@@ -1829,7 +1829,7 @@ public class Weather {
          *     {@link Weather.Location.Location }
          *     
          */
-        public Weather.Location.LocationData getLocation() {
+        public Weather.Location.LocationData getLocationData() {
             return locationData;
         }
 
@@ -1841,7 +1841,7 @@ public class Weather {
          *     {@link Weather.Location.Location }
          *     
          */
-        public void setLocation(Weather.Location.LocationData value) {
+        public void setLocationData(Weather.Location.LocationData value) {
             this.locationData = value;
         }
 

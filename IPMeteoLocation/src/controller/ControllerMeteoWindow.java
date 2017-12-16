@@ -2,25 +2,26 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import model.Previsione;
-import model.Weather;
+import model.Weather.Forecast.Time;
+import model.Weather.Forecast.Time.Humidity;
+import model.Weather.Location;
 import view.MeteoWindow;
 
 public class ControllerMeteoWindow implements ActionListener {
 	
 	private Previsione model;
 	private MeteoWindow view;
-	private int num = 0;
+	private static int index;
 	
 	public ControllerMeteoWindow(Previsione model, MeteoWindow view) {
 		view.getBtnIndietro().addActionListener(this);
@@ -31,22 +32,13 @@ public class ControllerMeteoWindow implements ActionListener {
 		view.setVisible(true);
 		this.model = model;
 		this.view = view;
-		
-		URL file = null;
-		try {
-			file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml&lat=45.6662855&lon=12.2420720&cnt=3&units=metric&lang=it&appid=42b223d0b7441d97bd051375c1c1f0a1");
-		} catch (MalformedURLException e1) {
-			e1.printStackTrace();
-		}
-		Weather customer = null;
-		try {
-			JAXBContext jaxbContext =JAXBContext.newInstance(Weather.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			customer = (Weather) jaxbUnmarshaller.unmarshal(file);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		System.out.println(customer.getForecast().getTime().get(0).getPrecipitation().getValue());
+		index = 0;
+	}
+	
+	public String inizialeMaiuscola(String x) {
+		String iniziale = x.charAt(0) + "";
+		String n = x.substring(1,x.length());
+		return iniziale.toUpperCase() + n.toLowerCase();
 	}
 	
 	public void setImmagineMeteo(int x) {
@@ -78,15 +70,103 @@ public class ControllerMeteoWindow implements ActionListener {
 		
 		view.getLblImg().setIcon(img);
 	}
+	
+	public void aggiornaGrafica(int flag) {
+		boolean ok = true;
+		Location local = model.getPrevisione().getLocation();
+		List<Time> dati = model.getPrevisione().getForecast().getTime();
+		
+		String nome = null;
+		String stato = null;
+		String lat = null;
+		String lon = null;
+		
+		XMLGregorianCalendar da = null;
+		XMLGregorianCalendar a = null;
+		
+		String cielo = null;
+		String img = null;
+		
+		String temp = null;
+		String tempMin = null;
+		String tempMax = null;
+		String humidity = null;
+		
+		if(flag > 0) {
+			index++;
+		}
+		if(flag < 0) {
+			index--;
+		}
+		
+		try {
+			nome = local.getName();
+			stato = local.getCountry();
+			//lat = local.getLocationData().getLatitude() + "";
+			//lon = local.getLocationData().getLongitude() + "";
+			
+			da = dati.get(index).getFrom();
+			a = dati.get(index).getTo();
+			
+			cielo = dati.get(index).getSymbol().getName();
+			img = dati.get(index).getSymbol().getVar();
+			
+			temp = dati.get(index).getTemperature().getValue() + "";
+			tempMin = dati.get(index).getTemperature().getMin() + "";
+			tempMax = dati.get(index).getTemperature().getMax() + "";
+			humidity = dati.get(index).getHumidity().getValue() + "";
+		} catch(Exception e) {
+			ok = false;
+			
+			if(flag > 0) {
+				index--;
+			}
+			if(flag < 0) {
+				index++;
+			}
+		}
+		
+		if(ok) {
+			System.out.println(nome);
+			System.out.println(stato);
+			System.out.println(da);
+			System.out.println(cielo);
+			System.out.println(temp);
+			
+			String dove = nome + ", " + stato;
+			String valDa = "Da: " + da.getDay() + "/" + da.getMonth() + " " + da.getHour() + ":" + da.getMinute();
+			String valA = "A: " + a.getDay() + "/" + a.getMonth() + " " + a.getHour() + ":" + a.getMinute();
+			String meteo = this.inizialeMaiuscola(cielo);
+			String temperatura = "T. Media: " + temp + " °C " + "Min:" + tempMin + " °C " + "Max:" + tempMax + "°C";
+			String umidita = "Umidità: " + humidity + "%";
+			
+			System.out.println(dove);
+			System.out.println(meteo);
+			System.out.println(temperatura);
+			
+			view.getLblInfo().setText(dove);
+			view.getLblprevisioni().setText("<html>" + valDa + " - " + valA
+											+ "</br>" + meteo
+											+ "</br>" + temperatura
+											+ "</br>" + umidita + "</html>");
+			try {
+				view.getLblImg().setIcon(new ImageIcon(new URL("http://openweathermap.org/img/w/" + img + ".png")));
+			} catch (MalformedURLException e) {
+				JOptionPane.showMessageDialog(view, "Non è stato possibilire recuperare la miniatura del tempo", "Errore", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			JOptionPane.showMessageDialog(view, "Non ci sono previsioni per questo intervallo di tempo", "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 
 	public void actionPerformed(ActionEvent arg0) {
 		
 		if(arg0.getSource() == view.getBtnIndietro()) {
-			
+			this.aggiornaGrafica(-1);
 		}
 		
 		if(arg0.getSource() == view.getBtnAvanti()) {
-			
+			this.aggiornaGrafica(1);
 		}
 		
 		if(arg0.getSource() == view.getBtnEsci()) {
@@ -107,8 +187,8 @@ public class ControllerMeteoWindow implements ActionListener {
 					JOptionPane.showMessageDialog(view, "Digita il nome di una città e riprova", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				//fare richiesta meteo
-				//aggiornare finestra
+				model = new Previsione(where);
+				this.aggiornaGrafica(0);
 			}
 		}
 		
