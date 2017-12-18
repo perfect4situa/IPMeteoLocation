@@ -5,12 +5,17 @@ import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
 
 public class IPWindow extends JFrame {
 
@@ -19,21 +24,21 @@ public class IPWindow extends JFrame {
 	private JButton btnMyIp;
 	private JFormattedTextField formattedTextField;
 	private JButton btnCerca;
-	private JLabel lblStato;
-	private JLabel lblRegione;
-	private JLabel lblCitt;
-	private JLabel lbl1;
-	private JLabel lbl2;
-	private JLabel lbl3;
 	private JLabel label;
 	private JButton btnMeteo;
+	private JPanel panel;
+	private JLabel lblNewLabel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
 
 	/**
 	 * Create the frame.
 	 */
 	public IPWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 630, 350);
+		setBounds(100, 100, 630, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -44,6 +49,7 @@ public class IPWindow extends JFrame {
 		this.contentPane.add(this.btnMyIp);
 		
 		this.formattedTextField = new JFormattedTextField(createFormatter("###.###.###.###"));
+		formattedTextField.setHorizontalAlignment(SwingConstants.CENTER);
 		this.formattedTextField.setBounds(190, 11, 235, 35);
 		this.contentPane.add(this.formattedTextField);
 		
@@ -51,43 +57,49 @@ public class IPWindow extends JFrame {
 		this.btnCerca.setBounds(489, 11, 115, 35);
 		this.contentPane.add(this.btnCerca);
 		
-		this.lblStato = new JLabel("Stato");
-		this.lblStato.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblStato.setBounds(10, 57, 115, 35);
-		this.contentPane.add(this.lblStato);
-		
-		this.lblRegione = new JLabel("Regione");
-		this.lblRegione.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblRegione.setBounds(225, 57, 115, 35);
-		this.contentPane.add(this.lblRegione);
-		
-		this.lblCitt = new JLabel("Citt\u00E0");
-		this.lblCitt.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblCitt.setBounds(445, 57, 115, 35);
-		this.contentPane.add(this.lblCitt);
-		
-		this.lbl1 = new JLabel("");
-		this.lbl1.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lbl1.setBounds(10, 103, 115, 35);
-		this.contentPane.add(this.lbl1);
-		
-		this.lbl2 = new JLabel("");
-		this.lbl2.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lbl2.setBounds(225, 103, 115, 35);
-		this.contentPane.add(this.lbl2);
-		
-		this.lbl3 = new JLabel("");
-		this.lbl3.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lbl3.setBounds(445, 103, 115, 35);
-		this.contentPane.add(this.lbl3);
-		
 		this.label = new JLabel("");
-		this.label.setBounds(11, 149, 468, 152);
+		label.setForeground(Color.DARK_GRAY);
+		label.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.label.setBounds(10, 151, 470, 200);
 		this.contentPane.add(this.label);
 		
 		this.btnMeteo = new JButton("Meteo");
-		this.btnMeteo.setBounds(489, 149, 115, 35);
+		this.btnMeteo.setBounds(489, 220, 115, 35);
 		this.contentPane.add(this.btnMeteo);
+		
+		panel = new JPanel();
+		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Citt\u00E0", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
+		panel.setToolTipText("");
+		panel.setBounds(10, 68, 204, 72);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		lblNewLabel = new JLabel("New label");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(10, 25, 184, 36);
+		panel.add(lblNewLabel);
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Regione", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, null));
+		panel_1.setBounds(224, 68, 204, 72);
+		contentPane.add(panel_1);
+		panel_1.setLayout(null);
+		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(10, 25, 184, 36);
+		panel_1.add(lblNewLabel_1);
+		
+		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Stato", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, null));
+		panel_2.setBounds(438, 68, 166, 72);
+		contentPane.add(panel_2);
+		panel_2.setLayout(null);
+		
+		lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_2.setBounds(10, 25, 146, 36);
+		panel_2.add(lblNewLabel_2);
 		
 		this.clearInput();
 		
@@ -116,54 +128,6 @@ public class IPWindow extends JFrame {
 
 	public void setBtnCerca(JButton btnCerca) {
 		this.btnCerca = btnCerca;
-	}
-
-	public JLabel getLblStato() {
-		return lblStato;
-	}
-
-	public void setLblStato(JLabel lblStato) {
-		this.lblStato = lblStato;
-	}
-
-	public JLabel getLblRegione() {
-		return lblRegione;
-	}
-
-	public void setLblRegione(JLabel lblRegione) {
-		this.lblRegione = lblRegione;
-	}
-
-	public JLabel getLblCitt() {
-		return lblCitt;
-	}
-
-	public void setLblCitt(JLabel lblCitt) {
-		this.lblCitt = lblCitt;
-	}
-
-	public JLabel getLbl1() {
-		return lbl1;
-	}
-
-	public void setLbl1(JLabel lbl1) {
-		this.lbl1 = lbl1;
-	}
-
-	public JLabel getLbl2() {
-		return lbl2;
-	}
-
-	public void setLbl2(JLabel lbl2) {
-		this.lbl2 = lbl2;
-	}
-
-	public JLabel getLbl3() {
-		return lbl3;
-	}
-
-	public void setLbl3(JLabel lbl3) {
-		this.lbl3 = lbl3;
 	}
 
 	public JLabel getLabel() {

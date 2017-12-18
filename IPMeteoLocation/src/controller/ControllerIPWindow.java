@@ -1,11 +1,14 @@
 package controller;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -17,6 +20,7 @@ public class ControllerIPWindow implements ActionListener{
 	
 	private IPWindow finestraIP;
 	private Location location;
+	private final static String FIXED_MAP_KEY=  "AIzaSyCelP-ihyvYsZsK1IM7qJ_drIWMlaOptw8";
 
 	public ControllerIPWindow(IPWindow finestraIP)
 	{
@@ -30,11 +34,10 @@ public class ControllerIPWindow implements ActionListener{
 		
 		if(evt.getSource()==finestraIP.getBtnMyIp())
 		{
+			
 			location=request();
 			
-			finestraIP.getLbl1().setText(location.getCountry());
-			finestraIP.getLbl2().setText(location.getRegionName());
-			finestraIP.getLbl3().setText(location.getCity());
+			finestraIP.getLabel().setIcon(this.imageRequest(location.getLat(), location.getLon()));
 		}
 		else if(evt.getSource()==finestraIP.getBtnCerca())
 		{
@@ -66,9 +69,7 @@ public class ControllerIPWindow implements ActionListener{
 				location=request(checker.getHostAddress());
 				
 				
-				finestraIP.getLbl1().setText(location.getCountry());
-				finestraIP.getLbl2().setText(location.getRegionName());
-				finestraIP.getLbl3().setText(location.getCity());
+				finestraIP.getLabel().setIcon(this.imageRequest(location.getLat(), location.getLon()));
 				
 				finestraIP.clearInput();
 			}
@@ -79,6 +80,24 @@ public class ControllerIPWindow implements ActionListener{
 			
 		}
 		
+	}
+	
+	private ImageIcon imageRequest(String lat, String lon)
+	{
+		URL richiesta=null;;
+		ImageIcon immagine=null;
+		
+		try
+		{
+			richiesta = new URL("https://maps.googleapis.com/maps/api/staticmap?"+"center="+lat+","+lon+"&size=470x200"+"&zoom=15"+"&markers=color:red|label:!|"+lat+","+lon +"&maptype=roadmap"+"&key="+FIXED_MAP_KEY);
+			immagine=new ImageIcon(richiesta);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return immagine;
 	}
 	
 	private Location request()
