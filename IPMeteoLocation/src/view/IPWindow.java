@@ -5,7 +5,6 @@ import java.text.ParseException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 import javax.swing.BorderFactory;

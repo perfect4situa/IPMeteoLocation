@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -13,7 +12,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import model.Previsione;
 import model.Weather.Forecast.Time;
-import model.Weather.Forecast.Time.Humidity;
 import model.Weather.Location;
 import view.MeteoWindow;
 
@@ -21,7 +19,7 @@ public class ControllerMeteoWindow implements ActionListener {
 	
 	private Previsione model;
 	private MeteoWindow view;
-	private static int index;
+	private int index;
 	
 	public ControllerMeteoWindow(Previsione model, MeteoWindow view) {
 		view.getBtnIndietro().addActionListener(this);
@@ -30,6 +28,7 @@ public class ControllerMeteoWindow implements ActionListener {
 		view.getBtnMeteo().addActionListener(this);
 		
 		view.setVisible(true);
+		
 		this.model = model;
 		this.view = view;
 		index = 0;
@@ -41,36 +40,6 @@ public class ControllerMeteoWindow implements ActionListener {
 		return iniziale.toUpperCase() + n.toLowerCase();
 	}
 	
-	public void setImmagineMeteo(int x) {
-		ImageIcon img;
-		
-		switch(x) {
-			case 0:
-				img = new ImageIcon("../IPMeteoLocation/images/sole.jpeg");
-			break;
-			case 1:
-				img = new ImageIcon("../IPMeteoLocation/images/sole_con_nuvole.jpeg");
-			break;
-			case 2:
-				img = new ImageIcon("../IPMeteoLocation/images/nuvole.jpeg");
-			break;
-			case 3:
-				img = new ImageIcon("../IPMeteoLocation/images/pioggia.jpeg");
-			break;
-			case 4:
-				img = new ImageIcon("../IPMeteoLocation/images/temporale.jpeg");
-			break;
-			case 5:
-				img = new ImageIcon("../IPMeteoLocation/images/neve.jpeg");
-			break;
-			default:
-				img = new ImageIcon("../IPMeteoLocation/images/empty.jpg");
-			break;
-		}
-		
-		view.getLblImg().setIcon(img);
-	}
-	
 	public void aggiornaGrafica(int flag) {
 		boolean ok = true;
 		Location local = model.getPrevisione().getLocation();
@@ -78,14 +47,17 @@ public class ControllerMeteoWindow implements ActionListener {
 		
 		String nome = null;
 		String stato = null;
-		String lat = null;
-		String lon = null;
+		//String lat = null;
+		//String lon = null;
 		
 		XMLGregorianCalendar da = null;
 		XMLGregorianCalendar a = null;
 		
 		String cielo = null;
 		String img = null;
+		
+		String vento = null;
+		String speed = null;
 		
 		String temp = null;
 		String tempMin = null;
@@ -111,13 +83,17 @@ public class ControllerMeteoWindow implements ActionListener {
 			cielo = dati.get(index).getSymbol().getName();
 			img = dati.get(index).getSymbol().getVar();
 			
+			vento = dati.get(index).getWindDirection().getCode() + ", ";
+			vento += dati.get(index).getWindSpeed().getName();
+			speed = dati.get(index).getWindSpeed().getMps() + "";
+			
 			temp = dati.get(index).getTemperature().getValue() + "";
 			tempMin = dati.get(index).getTemperature().getMin() + "";
 			tempMax = dati.get(index).getTemperature().getMax() + "";
 			humidity = dati.get(index).getHumidity().getValue() + "";
 		} catch(Exception e) {
 			ok = false;
-			
+
 			if(flag > 0) {
 				index--;
 			}
@@ -127,30 +103,21 @@ public class ControllerMeteoWindow implements ActionListener {
 		}
 		
 		if(ok) {
-			System.out.println(nome);
-			System.out.println(stato);
-			System.out.println(da);
-			System.out.println(cielo);
-			System.out.println(temp);
-			
 			String dove = nome + ", " + stato;
-			String valDa = "Da: " + da.getDay() + "/" + da.getMonth() + " " + da.getHour() + ":" + da.getMinute();
-			String valA = "A: " + a.getDay() + "/" + a.getMonth() + " " + a.getHour() + ":" + a.getMinute();
+			String valDa = da.getHour() + ":00" + "  " + da.getDay() + "/" + da.getMonth() + "/" + da.getYear();
+			String valA = a.getHour() + ":00" + "  " + a.getDay() + "/" + a.getMonth() + "/" + a.getYear();
 			String meteo = this.inizialeMaiuscola(cielo);
-			String temperatura = "T. Media: " + temp + " °C " + "Min:" + tempMin + " °C " + "Max:" + tempMax + "°C";
+			String temperatura = "<html>Temperatura<br>Media: " + temp + " °C" + "<br>Min: " + tempMin + " °C" + "<br>Max: " + tempMax + " °C</html>";
 			String umidita = "Umidità: " + humidity + "%";
 			
-			System.out.println(dove);
-			System.out.println(meteo);
-			System.out.println(temperatura);
-			
 			view.getLblInfo().setText(dove);
-			view.getLblprevisioni().setText("<html>" + valDa + " - " + valA
-											+ "</br>" + meteo
-											+ "</br>" + temperatura
-											+ "</br>" + umidita + "</html>");
+			view.getLblData().setText("<html>Data<br>" + valDa + "<br>" + valA + "</html>");
+			view.getLblTemperatura().setText(temperatura + "\n" + umidita);
+			view.getLblVento().setText(vento + " " + speed + " Km/h");
+			view.getLblTempo().setText(meteo);
 			try {
-				view.getLblImg().setIcon(new ImageIcon(new URL("http://openweathermap.org/img/w/" + img + ".png")));
+				view.getLblImgVento().setIcon(new ImageIcon(new URL("https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-27-32.png")));
+				view.getLblImgMeteo().setIcon(new ImageIcon(new URL("http://openweathermap.org/img/w/" + img + ".png")));
 			} catch (MalformedURLException e) {
 				JOptionPane.showMessageDialog(view, "Non è stato possibilire recuperare la miniatura del tempo", "Errore", JOptionPane.ERROR_MESSAGE);
 			}
@@ -187,7 +154,8 @@ public class ControllerMeteoWindow implements ActionListener {
 					JOptionPane.showMessageDialog(view, "Digita il nome di una città e riprova", "Errore", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				model = new Previsione(where);
+				index = 0;
+				model = new Previsione(where.replaceAll(" ", "%20"));
 				this.aggiornaGrafica(0);
 			}
 		}

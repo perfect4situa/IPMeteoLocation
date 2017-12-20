@@ -17,9 +17,13 @@ public class MeteoWindow extends JFrame {
 	private JPanel contentPane;
 	private JPanel panel;
 	private JLabel lblInfo;
-	private JLabel lblImg;
+	private JLabel lblTemperatura;
+	private JLabel lblData;
+	private JLabel lblVento;
+	private JLabel lblImgVento;
+	private JLabel lblTempo;
+	private JLabel lblImgMeteo;
 	private JButton btnIndietro;
-	private JLabel lblprevisioni;
 	private JButton btnAvanti;
 	private JButton btnEsci;
 	private JButton btnMeteo;
@@ -54,37 +58,61 @@ public class MeteoWindow extends JFrame {
 		contentPane.setLayout(null);
 		
 		panel = new JPanel();
-		panel.setBounds(0, 0, 444, 259);
+		panel.setBounds(0, 0, 444, 252);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		lblInfo = new JLabel("*info*");
-		lblInfo.setToolTipText("Meteo info");
+		lblInfo.setToolTipText("Citt\u00E0 e stato");
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInfo.setBounds(10, 11, 424, 23);
+		lblInfo.setBounds(143, 13, 158, 23);
 		panel.add(lblInfo);
 		
-		lblImg = new JLabel();
-		lblImg.setToolTipText("Immagine meteo");
-		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImg.setBounds(107, 45, 229, 72);
-		panel.add(lblImg);
-		lblImg.setLayout(null);
+		lblTemperatura = new JLabel("*temperatura*");
+		lblTemperatura.setToolTipText("Temperatura");
+		lblTemperatura.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTemperatura.setBounds(12, 22, 111, 71);
+		panel.add(lblTemperatura);
+		
+		lblData = new JLabel("*data*");
+		lblData.setToolTipText("Intervallo previsione");
+		lblData.setHorizontalAlignment(SwingConstants.CENTER);
+		lblData.setBounds(311, 23, 123, 59);
+		panel.add(lblData);
+		
+		lblVento = new JLabel("*vento*");
+		lblVento.setToolTipText("Velocit\u00E0 del vento");
+		lblVento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblVento.setBounds(143, 49, 158, 16);
+		panel.add(lblVento);
+		
+		lblImgVento = new JLabel();
+		lblImgVento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImgVento.setToolTipText("Immagine vento");
+		lblImgVento.setBounds(166, 75, 111, 47);
+		panel.add(lblImgVento);
+		
+		lblTempo = new JLabel("*tempo*");
+		lblTempo.setToolTipText("Condizioni meteorologiche");
+		lblTempo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTempo.setBounds(143, 127, 158, 23);
+		panel.add(lblTempo);
+		
+		lblImgMeteo = new JLabel();
+		lblImgMeteo.setToolTipText("Immagine meteo");
+		lblImgMeteo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImgMeteo.setBounds(166, 163, 111, 47);
+		panel.add(lblImgMeteo);
+		lblImgMeteo.setLayout(null);
 		
 		btnIndietro = new JButton("<");
 		btnIndietro.setToolTipText("Indietro");
-		btnIndietro.setBounds(10, 139, 50, 23);
+		btnIndietro.setBounds(109, 153, 50, 23);
 		panel.add(btnIndietro);
-		
-		lblprevisioni = new JLabel("*previsioni*");
-		lblprevisioni.setToolTipText("Previsioni");
-		lblprevisioni.setHorizontalAlignment(SwingConstants.CENTER);
-		lblprevisioni.setBounds(70, 128, 304, 56);
-		panel.add(lblprevisioni);
 		
 		btnAvanti = new JButton(">");
 		btnAvanti.setToolTipText("Avanti");
-		btnAvanti.setBounds(384, 139, 50, 23);
+		btnAvanti.setBounds(285, 153, 50, 23);
 		panel.add(btnAvanti);
 		
 		btnEsci = new JButton("Chiudi");
@@ -106,12 +134,52 @@ public class MeteoWindow extends JFrame {
 		this.lblInfo = lblInfo;
 	}
 
-	public JLabel getLblImg() {
-		return lblImg;
+	public JLabel getLblTemperatura() {
+		return lblTemperatura;
 	}
 
-	public void setLblImg(JLabel lblImg) {
-		this.lblImg = lblImg;
+	public void setLblTemperatura(JLabel lblTemperatura) {
+		this.lblTemperatura = lblTemperatura;
+	}
+
+	public JLabel getLblData() {
+		return lblData;
+	}
+
+	public void setLblData(JLabel lblData) {
+		this.lblData = lblData;
+	}
+
+	public JLabel getLblVento() {
+		return lblVento;
+	}
+
+	public void setLblVento(JLabel lblVento) {
+		this.lblVento = lblVento;
+	}
+
+	public JLabel getLblImgVento() {
+		return lblImgVento;
+	}
+
+	public void setLblImgVento(JLabel lblImgVento) {
+		this.lblImgVento = lblImgVento;
+	}
+
+	public JLabel getLblTempo() {
+		return lblTempo;
+	}
+
+	public void setLblTempo(JLabel lblTempo) {
+		this.lblTempo = lblTempo;
+	}
+
+	public JLabel getLblImgMeteo() {
+		return lblImgMeteo;
+	}
+
+	public void setLblImgMeteo(JLabel lblImgMeteo) {
+		this.lblImgMeteo = lblImgMeteo;
 	}
 
 	public JButton getBtnIndietro() {
@@ -120,14 +188,6 @@ public class MeteoWindow extends JFrame {
 
 	public void setBtnIndietro(JButton btnIndietro) {
 		this.btnIndietro = btnIndietro;
-	}
-
-	public JLabel getLblprevisioni() {
-		return lblprevisioni;
-	}
-
-	public void setLblprevisioni(JLabel lblprevisioni) {
-		this.lblprevisioni = lblprevisioni;
 	}
 
 	public JButton getBtnAvanti() {
@@ -153,4 +213,5 @@ public class MeteoWindow extends JFrame {
 	public void setBtnMeteo(JButton btnMeteo) {
 		this.btnMeteo = btnMeteo;
 	}
+
 }
