@@ -14,7 +14,9 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import model.Location;
+import model.Previsione;
 import view.IPWindow;
+import view.MeteoWindow;
 
 public class ControllerIPWindow implements ActionListener{
 	
@@ -34,10 +36,14 @@ public class ControllerIPWindow implements ActionListener{
 		
 		if(evt.getSource()==finestraIP.getBtnMyIp())
 		{
-			
+			formatIp("192.156.15.9");
 			location=request();
 			
 			finestraIP.getLabel().setIcon(this.imageRequest(location.getLat(), location.getLon()));
+			finestraIP.getLblNewLabel().setText(location.getCity());
+			finestraIP.getLblNewLabel_1().setText(location.getRegionName());
+			finestraIP.getLblNewLabel_2().setText(location.getCountry()+" ("+location.getCountryCode()+")");
+			finestraIP.getFormattedTextField().setText(formatIp(location.getQuery()));
 		}
 		else if(evt.getSource()==finestraIP.getBtnCerca())
 		{
@@ -69,15 +75,28 @@ public class ControllerIPWindow implements ActionListener{
 				location=request(checker.getHostAddress());
 				
 				
+				
 				finestraIP.getLabel().setIcon(this.imageRequest(location.getLat(), location.getLon()));
 				
-				finestraIP.clearInput();
+				finestraIP.getLabel().setIcon(this.imageRequest(location.getLat(), location.getLon()));
+				finestraIP.getLblNewLabel().setText(location.getCity());
+				finestraIP.getLblNewLabel_1().setText(location.getRegionName());
+				finestraIP.getLblNewLabel_2().setText(location.getCountry()+" ("+location.getCountryCode()+")");
+				finestraIP.getFormattedTextField().setText(formatIp(location.getQuery()));
+				
 			}
 			else
 			{
 				JOptionPane.showMessageDialog(finestraIP, "Inserisci un ip Corretto", "Ip errato", JOptionPane.ERROR_MESSAGE);
 			}
 			
+		}
+		else if(evt.getSource()==finestraIP.getBtnMeteo())
+		{
+			if(location!=null)
+			{
+				new ControllerMeteoWindow(new Previsione(location.getLat(), location.getLon()), new MeteoWindow());
+			}
 		}
 		
 	}
@@ -140,4 +159,39 @@ public class ControllerIPWindow implements ActionListener{
 		return location;
 	}
 	
+	private String formatIp(String ip)
+	{
+		String result="";
+		int count=0;
+		
+		String[] vet=ip.split(".");
+		
+		
+		for(String app:vet)
+		{
+			switch(app.length())
+			{
+				case 1:
+					app="00"+app;
+				break;
+				
+				case 2:
+					app="0"+app;
+				break;
+				
+			}
+			
+			if(count==0)
+			{
+				result+=app;
+				count++;
+			}
+			else
+			{
+				result+="."+app;
+			}
+		}
+		
+		return result;
+	}
 }

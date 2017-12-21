@@ -73,7 +73,7 @@ public class IPWindow extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		lblNewLabel = new JLabel("New label");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(10, 25, 184, 36);
 		panel.add(lblNewLabel);
@@ -84,7 +84,7 @@ public class IPWindow extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setBounds(10, 25, 184, 36);
 		panel_1.add(lblNewLabel_1);
@@ -95,7 +95,7 @@ public class IPWindow extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(null);
 		
-		lblNewLabel_2 = new JLabel("New label");
+		lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_2.setBounds(10, 25, 146, 36);
 		panel_2.add(lblNewLabel_2);
@@ -145,6 +145,32 @@ public class IPWindow extends JFrame {
 		this.btnMeteo = btnMeteo;
 	}
 	
+	
+	
+	public JLabel getLblNewLabel() {
+		return lblNewLabel;
+	}
+
+	public void setLblNewLabel(JLabel lblNewLabel) {
+		this.lblNewLabel = lblNewLabel;
+	}
+
+	public JLabel getLblNewLabel_1() {
+		return lblNewLabel_1;
+	}
+
+	public void setLblNewLabel_1(JLabel lblNewLabel_1) {
+		this.lblNewLabel_1 = lblNewLabel_1;
+	}
+
+	public JLabel getLblNewLabel_2() {
+		return lblNewLabel_2;
+	}
+
+	public void setLblNewLabel_2(JLabel lblNewLabel_2) {
+		this.lblNewLabel_2 = lblNewLabel_2;
+	}
+
 	public void setActionListener(ActionListener x)
 	{
 		this.getBtnCerca().addActionListener(x);
