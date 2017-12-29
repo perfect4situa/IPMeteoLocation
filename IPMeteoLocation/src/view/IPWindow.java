@@ -78,7 +78,7 @@ public class IPWindow extends JFrame {
 		
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 25, 184, 17);
+		lblNewLabel.setBounds(10, 15, 186, 30);
 		panel.add(lblNewLabel);
 		
 		panel_1 = new JPanel();
@@ -89,7 +89,7 @@ public class IPWindow extends JFrame {
 		
 		lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(10, 25, 184, 17);
+		lblNewLabel_1.setBounds(10, 15, 186, 30);
 		panel_1.add(lblNewLabel_1);
 		
 		panel_2 = new JPanel();
@@ -100,7 +100,7 @@ public class IPWindow extends JFrame {
 		
 		lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_2.setBounds(10, 25, 184, 17);
+		lblNewLabel_2.setBounds(10, 15, 186, 30);
 		panel_2.add(lblNewLabel_2);
 		
 		this.panel_3 = new JPanel();
@@ -111,7 +111,7 @@ public class IPWindow extends JFrame {
 		
 		this.lblNewLabel_3 = new JLabel("");
 		this.lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblNewLabel_3.setBounds(10, 25, 184, 17);
+		this.lblNewLabel_3.setBounds(10, 15, 186, 30);
 		this.panel_3.add(this.lblNewLabel_3);
 		
 		this.clearInput();
