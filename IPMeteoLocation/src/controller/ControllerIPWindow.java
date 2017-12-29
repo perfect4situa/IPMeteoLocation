@@ -36,13 +36,13 @@ public class ControllerIPWindow implements ActionListener{
 		
 		if(evt.getSource()==finestraIP.getBtnMyIp())
 		{
-			formatIp("192.156.15.9");
 			location=request();
 			
 			finestraIP.getLabel().setIcon(this.imageRequest(location.getLat(), location.getLon()));
 			finestraIP.getLblNewLabel().setText(location.getCity());
 			finestraIP.getLblNewLabel_1().setText(location.getRegionName());
 			finestraIP.getLblNewLabel_2().setText(location.getCountry()+" ("+location.getCountryCode()+")");
+			finestraIP.getLblNewLabel_3().setText(location.getOrg());
 			finestraIP.getFormattedTextField().setText(formatIp(location.getQuery()));
 		}
 		else if(evt.getSource()==finestraIP.getBtnCerca())
@@ -82,6 +82,7 @@ public class ControllerIPWindow implements ActionListener{
 				finestraIP.getLblNewLabel().setText(location.getCity());
 				finestraIP.getLblNewLabel_1().setText(location.getRegionName());
 				finestraIP.getLblNewLabel_2().setText(location.getCountry()+" ("+location.getCountryCode()+")");
+				finestraIP.getLblNewLabel_3().setText(location.getOrg());
 				finestraIP.getFormattedTextField().setText(formatIp(location.getQuery()));
 				
 			}
@@ -108,7 +109,7 @@ public class ControllerIPWindow implements ActionListener{
 		
 		try
 		{
-			richiesta = new URL("https://maps.googleapis.com/maps/api/staticmap?"+"center="+lat+","+lon+"&size=470x200"+"&zoom=15"+"&markers=color:red|label:!|"+lat+","+lon +"&maptype=roadmap"+"&key="+FIXED_MAP_KEY);
+			richiesta = new URL("https://maps.googleapis.com/maps/api/staticmap?"+"center="+lat+","+lon+"&size=345x285"+"&zoom=15"+"&markers=color:red|label:!|"+lat+","+lon +"&maptype=roadmap"+"&key="+FIXED_MAP_KEY);
 			immagine=new ImageIcon(richiesta);
 		}
 		catch (Exception e)
@@ -164,8 +165,7 @@ public class ControllerIPWindow implements ActionListener{
 		String result="";
 		int count=0;
 		
-		String[] vet=ip.split(".");
-		
+		String[] vet=ip.split("\\.");
 		
 		for(String app:vet)
 		{
