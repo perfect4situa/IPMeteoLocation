@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 
 import javax.swing.JFrame;
@@ -11,11 +13,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import java.awt.Toolkit;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
-import javax.swing.JTextField;
 
 public class IPWindow extends JFrame {
 
@@ -39,6 +43,7 @@ public class IPWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public IPWindow() {
+		this.getSetFrameIcon();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 630, 400);
 		contentPane = new JPanel();
@@ -191,6 +196,15 @@ public class IPWindow extends JFrame {
 
 	public void setLblNewLabel_2(JLabel lblNewLabel_2) {
 		this.lblNewLabel_2 = lblNewLabel_2;
+	}
+	
+	public void getSetFrameIcon() {
+		try {
+			URL url = new URL("https://ipapi.co/static/images/favicon.34f0ec468301.png");
+			this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Non è stato possibile recuperare l'icona della finestra", "Errore", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 	public void setActionListener(ActionListener x)
