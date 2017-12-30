@@ -1,129 +1,160 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+import model.Geocode;
+import model.Previsione;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MeteoWindow extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3146247893939891820L;
+	private static final String GEOCODE_KEY = "AIzaSyCkBK1uTNhXgGksQiHic__WgZn6E7K_fyw";
+	private static final String MAP_KEY = "AIzaSyCelP-ihyvYsZsK1IM7qJ_drIWMlaOptw8";
 	private JPanel contentPane;
-	private JPanel panel;
+	private JPanel panelMeteo;
+	private JLabel lblBackground;
 	private JLabel lblInfo;
+	private JLabel lblTemperatura_1;
 	private JLabel lblTemperatura;
+	private JLabel lblData_1;
 	private JLabel lblData;
 	private JLabel lblVento;
 	private JLabel lblImgVento;
-	private JLabel lblTempo;
+	private JLabel lblMeteo;
 	private JLabel lblImgMeteo;
 	private JButton btnIndietro;
 	private JButton btnAvanti;
 	private JButton btnEsci;
 	private JButton btnMeteo;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MeteoWindow frame = new MeteoWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public MeteoWindow() {
+		this.getSetFrameIcon();
 		setTitle("Meteo");
 		setResizable(false);
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 287);
+		setBounds(100, 100, 609, 527);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		panel = new JPanel();
-		panel.setBounds(0, 0, 444, 252);
-		contentPane.add(panel);
-		panel.setLayout(null);
+		panelMeteo = new JPanel();
+		panelMeteo.setBounds(0, 0, 603, 492);
+		contentPane.add(panelMeteo);
+		panelMeteo.setLayout(null);
 		
 		lblInfo = new JLabel("*info*");
+		lblInfo.setFont(new Font("Impact", Font.PLAIN, 30));
 		lblInfo.setToolTipText("Citt\u00E0 e stato");
 		lblInfo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInfo.setBounds(143, 13, 158, 23);
-		panel.add(lblInfo);
+		lblInfo.setBounds(105, 13, 392, 47);
+		panelMeteo.add(lblInfo);
+		
+		lblTemperatura_1 = new JLabel("Temperatura");
+		lblTemperatura_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTemperatura_1.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblTemperatura_1.setBounds(23, 135, 155, 47);
+		panelMeteo.add(lblTemperatura_1);
 		
 		lblTemperatura = new JLabel("*temperatura*");
+		lblTemperatura.setFont(new Font("Arial", Font.BOLD, 20));
 		lblTemperatura.setToolTipText("Temperatura");
 		lblTemperatura.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTemperatura.setBounds(12, 22, 111, 71);
-		panel.add(lblTemperatura);
+		lblTemperatura.setBounds(12, 181, 185, 129);
+		panelMeteo.add(lblTemperatura);
+		
+		lblData_1 = new JLabel("Data (IT)");
+		lblData_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblData_1.setFont(new Font("Calibri", Font.BOLD, 25));
+		lblData_1.setBounds(434, 135, 155, 47);
+		panelMeteo.add(lblData_1);
 		
 		lblData = new JLabel("*data*");
+		lblData.setFont(new Font("Arial", Font.BOLD, 20));
 		lblData.setToolTipText("Intervallo previsione");
 		lblData.setHorizontalAlignment(SwingConstants.CENTER);
-		lblData.setBounds(311, 23, 123, 59);
-		panel.add(lblData);
+		lblData.setBounds(434, 181, 155, 103);
+		panelMeteo.add(lblData);
 		
 		lblVento = new JLabel("*vento*");
+		lblVento.setFont(new Font("Arial", Font.BOLD, 23));
 		lblVento.setToolTipText("Velocit\u00E0 del vento");
 		lblVento.setHorizontalAlignment(SwingConstants.CENTER);
-		lblVento.setBounds(143, 49, 158, 16);
-		panel.add(lblVento);
+		lblVento.setBounds(133, 307, 337, 41);
+		panelMeteo.add(lblVento);
 		
 		lblImgVento = new JLabel();
-		lblImgVento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImgVento.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblImgVento.setToolTipText("Immagine vento");
-		lblImgVento.setBounds(166, 75, 111, 47);
-		panel.add(lblImgVento);
+		lblImgVento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImgVento.setBounds(242, 361, 119, 74);
+		panelMeteo.add(lblImgVento);
 		
-		lblTempo = new JLabel("*tempo*");
-		lblTempo.setToolTipText("Condizioni meteorologiche");
-		lblTempo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTempo.setBounds(143, 127, 158, 23);
-		panel.add(lblTempo);
+		lblMeteo = new JLabel("*tempo*");
+		lblMeteo.setFont(new Font("Arial", Font.BOLD, 23));
+		lblMeteo.setToolTipText("Condizioni meteorologiche");
+		lblMeteo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMeteo.setBounds(145, 73, 312, 47);
+		panelMeteo.add(lblMeteo);
 		
 		lblImgMeteo = new JLabel();
+		lblImgMeteo.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblImgMeteo.setToolTipText("Immagine meteo");
 		lblImgMeteo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImgMeteo.setBounds(166, 163, 111, 47);
-		panel.add(lblImgMeteo);
-		lblImgMeteo.setLayout(null);
+		lblImgMeteo.setBounds(260, 135, 83, 74);
+		panelMeteo.add(lblImgMeteo);
 		
 		btnIndietro = new JButton("<");
+		btnIndietro.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnIndietro.setToolTipText("Indietro");
-		btnIndietro.setBounds(109, 153, 50, 23);
-		panel.add(btnIndietro);
+		btnIndietro.setBounds(83, 73, 50, 35);
+		panelMeteo.add(btnIndietro);
 		
 		btnAvanti = new JButton(">");
+		btnAvanti.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnAvanti.setToolTipText("Avanti");
-		btnAvanti.setBounds(285, 153, 50, 23);
-		panel.add(btnAvanti);
+		btnAvanti.setBounds(469, 73, 50, 35);
+		panelMeteo.add(btnAvanti);
 		
 		btnEsci = new JButton("Chiudi");
+		btnEsci.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnEsci.setToolTipText("Chiudi il servizio");
-		btnEsci.setBounds(70, 211, 89, 23);
-		panel.add(btnEsci);
+		btnEsci.setBounds(12, 433, 119, 41);
+		panelMeteo.add(btnEsci);
 		
 		btnMeteo = new JButton("Meteo");
+		btnMeteo.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnMeteo.setToolTipText("Cerca il meteo di una localit\u00E0");
-		btnMeteo.setBounds(285, 211, 89, 23);
-		panel.add(btnMeteo);
+		btnMeteo.setBounds(470, 433, 119, 41);
+		panelMeteo.add(btnMeteo);
+		
+		lblBackground = new JLabel("");
+		lblBackground.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBackground.setBounds(0, 0, 603, 492);
+		panelMeteo.add(lblBackground);
+	}
+
+	public JLabel getLblBackground() {
+		return lblBackground;
+	}
+
+	public void setLblBackground(JLabel lblBackground) {
+		this.lblBackground = lblBackground;
 	}
 
 	public JLabel getLblInfo() {
@@ -166,12 +197,12 @@ public class MeteoWindow extends JFrame {
 		this.lblImgVento = lblImgVento;
 	}
 
-	public JLabel getLblTempo() {
-		return lblTempo;
+	public JLabel getLblMeteo() {
+		return lblMeteo;
 	}
 
-	public void setLblTempo(JLabel lblTempo) {
-		this.lblTempo = lblTempo;
+	public void setLblMeteo(JLabel lblMeteo) {
+		this.lblMeteo = lblMeteo;
 	}
 
 	public JLabel getLblImgMeteo() {
@@ -213,5 +244,91 @@ public class MeteoWindow extends JFrame {
 	public void setBtnMeteo(JButton btnMeteo) {
 		this.btnMeteo = btnMeteo;
 	}
-
+	
+	public void getSetFrameIcon() {
+		try {
+			URL url = new URL("https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png");
+			this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Non è stato possibile recuperare l'icona della finestra", "Errore", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	public void getSetImgMeteo(String code) {
+		try {
+			URL url = new URL("http://openweathermap.org/img/w/" + code + ".png");
+			ImageIcon icon = new ImageIcon(url);
+			Image scaledImage = icon.getImage().getScaledInstance(this.lblImgMeteo.getSize().width, this.lblImgMeteo.getSize().height, Image.SCALE_DEFAULT);
+			icon.setImage(scaledImage);
+			this.lblImgMeteo.setIcon(icon);
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Non è stato possibilire recuperare la miniatura del meteo", "Errore", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	public void getSetImgVento(String speed) {
+		double val = Double.parseDouble(speed);
+		int dim = 0;
+		
+		if(val < 4.00) {
+			dim = 32;
+		} else {
+			if(val < 8.00) {
+				dim = 48;
+			} else {
+				if(val < 14.00) {
+					dim = 72;
+				} else {
+					dim = 96;
+				}
+			}
+		}
+		
+		try {
+			URL url = new URL("https://icon-icons.com/icons2/758/PNG/"
+					+ dim
+					+ "/wind_icon-icons.com_64274.png");
+			this.lblImgVento.setIcon(new ImageIcon(url));
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Non è stato possibilire recuperare la miniatura del vento", "Errore", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	public void getSetBackground(Previsione model) {
+		Geocode location = null;
+		try	{
+			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/xml?"
+					+ "address="
+					+ model.getPrevisione().getLocation().getName()
+					+ ","
+					+ model.getPrevisione().getLocation().getCountry()
+					+ "&key=" + GEOCODE_KEY);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Geocode.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			location = (Geocode) jaxbUnmarshaller.unmarshal(url);
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Errore nella richiesta http(background-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			JOptionPane.showMessageDialog(this, "Errore nella lettura XML(background-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+		try {
+			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?"
+					+ "center="
+					+ location.getResult().getGeometry().getLocation().getLat()
+					+ ","
+					+ location.getResult().getGeometry().getLocation().getLng()
+					+ "&size=" + this.lblBackground.getSize().width +  "x" + this.lblBackground.getSize().height
+					+ "&zoom=10"
+					+ "&maptype=roadmap"
+					+ "&key=" + MAP_KEY);
+			this.lblBackground.setIcon(new ImageIcon(url));
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Errore nella richiesta http(background-map)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
 }
