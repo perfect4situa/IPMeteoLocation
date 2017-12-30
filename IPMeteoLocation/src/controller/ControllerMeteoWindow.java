@@ -2,11 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -32,6 +29,8 @@ public class ControllerMeteoWindow implements ActionListener {
 		this.model = model;
 		this.view = view;
 		index = 0;
+		
+		this.aggiornaGrafica(0);
 	}
 	
 	public String inizialeMaiuscola(String x) {
@@ -47,8 +46,6 @@ public class ControllerMeteoWindow implements ActionListener {
 		
 		String nome = null;
 		String stato = null;
-		//String lat = null;
-		//String lon = null;
 		
 		XMLGregorianCalendar da = null;
 		XMLGregorianCalendar a = null;
@@ -74,8 +71,6 @@ public class ControllerMeteoWindow implements ActionListener {
 		try {
 			nome = local.getName();
 			stato = local.getCountry();
-			//lat = local.getLocationData().getLatitude() + "";
-			//lon = local.getLocationData().getLongitude() + "";
 			
 			da = dati.get(index).getFrom();
 			a = dati.get(index).getTo();
@@ -83,8 +78,7 @@ public class ControllerMeteoWindow implements ActionListener {
 			cielo = dati.get(index).getSymbol().getName();
 			img = dati.get(index).getSymbol().getVar();
 			
-			vento = dati.get(index).getWindDirection().getCode() + ", ";
-			vento += dati.get(index).getWindSpeed().getName();
+			vento = dati.get(index).getWindSpeed().getName();
 			speed = dati.get(index).getWindSpeed().getMps() + "";
 			
 			temp = dati.get(index).getTemperature().getValue() + "";
@@ -104,25 +98,27 @@ public class ControllerMeteoWindow implements ActionListener {
 		
 		if(ok) {
 			String dove = nome + ", " + stato;
-			String valDa = da.getHour() + ":00" + "  " + da.getDay() + "/" + da.getMonth() + "/" + da.getYear();
-			String valA = a.getHour() + ":00" + "  " + a.getDay() + "/" + a.getMonth() + "/" + a.getYear();
+			String val = "<html>" + da.getHour() + ":00 - "
+					+ a.getHour() + ":00<br>"
+					+ da.getDay() + "/" + da.getMonth() + "/" + da.getYear() + "</html>";
 			String meteo = this.inizialeMaiuscola(cielo);
-			String temperatura = "<html>Temperatura<br>Media: " + temp + " °C" + "<br>Min: " + tempMin + " °C" + "<br>Max: " + tempMax + " °C</html>";
 			String umidita = "Umidità: " + humidity + "%";
+			String tempUm = "<html>Media: " + temp + " °C"
+					+ "<br>Min: " + tempMin + " °C"
+					+ "<br>Max: " + tempMax + " °C<br>"
+					+ umidita + "</html>";
 			
 			view.getLblInfo().setText(dove);
-			view.getLblData().setText("<html>Data<br>" + valDa + "<br>" + valA + "</html>");
-			view.getLblTemperatura().setText(temperatura + "\n" + umidita);
+			view.getLblData().setText(val);
+			view.getLblTemperatura().setText(tempUm);
 			view.getLblVento().setText(vento + " " + speed + " Km/h");
-			view.getLblTempo().setText(meteo);
-			try {
-				view.getLblImgVento().setIcon(new ImageIcon(new URL("https://cdn2.iconfinder.com/data/icons/weather-74/24/weather-27-32.png")));
-				view.getLblImgMeteo().setIcon(new ImageIcon(new URL("http://openweathermap.org/img/w/" + img + ".png")));
-			} catch (MalformedURLException e) {
-				JOptionPane.showMessageDialog(view, "Non è stato possibilire recuperare la miniatura del tempo", "Errore", JOptionPane.ERROR_MESSAGE);
-			}
+			view.getLblMeteo().setText(meteo);
+			
+			view.getSetImgMeteo(img);
+			view.getSetImgVento(speed);
+			view.getSetBackground(model);
 		} else {
-			JOptionPane.showMessageDialog(view, "Non ci sono previsioni per questo intervallo di tempo", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(view, "Non ci sono previsioni per questo intervallo di tempo", "Errore", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 
@@ -151,11 +147,12 @@ public class ControllerMeteoWindow implements ActionListener {
 			
 			if(where.equals("") || where == null) {
 				if(where.equals("")) {
-					JOptionPane.showMessageDialog(view, "Digita il nome di una città e riprova", "Errore", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(view, "Digita il nome di una città e riprova", "Errore", JOptionPane.INFORMATION_MESSAGE);
 				}
 			} else {
-				index = 0;
 				model = new Previsione(where.replaceAll(" ", "%20"));
+				index = 0;
+				
 				this.aggiornaGrafica(0);
 			}
 		}
