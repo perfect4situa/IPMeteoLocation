@@ -11,33 +11,84 @@ import javax.xml.bind.Unmarshaller;
 public class Previsione {
 	
 	private Weather previsione;
+	private static final String OPEN_WEATHER_KEY = "42b223d0b7441d97bd051375c1c1f0a1";
 	
-	public Previsione(String nome) {
-		try {
-			URL file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml&q=" + nome + "&units=metric&lang=it&appid=42b223d0b7441d97bd051375c1c1f0a1");
-			JAXBContext jaxbContext =JAXBContext.newInstance(Weather.class);
+	//previsione località (IP)
+	public Previsione() {
+		//recupero località IP
+		model.Location location = null;
+		try	{
+			URL url = new URL("http://ip-api.com/xml");
+			JAXBContext jaxbContext = JAXBContext.newInstance(model.Location.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			previsione = (Weather) jaxbUnmarshaller.unmarshal(file);
+			location = (model.Location) jaxbUnmarshaller.unmarshal(url);
 		} catch (MalformedURLException e) {
-			JOptionPane.showMessageDialog(null, "Errore nella richiesta http", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Errore nella richiesta http(ip)", "Errore", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (JAXBException e) {
-			JOptionPane.showMessageDialog(null, "Errore nella lettura XML", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Errore nella lettura XML(ip)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+		//recupero previsioni (lat, lon)
+		try {
+			URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml"
+					+ "&lat=" + location.getLat()
+					+ "&lon=" + location.getLon()
+					+ "&units=metric" 
+					+ "&lang=it"
+					+ "&cnt=8"
+					+ "&appid=" + OPEN_WEATHER_KEY);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			previsione = (Weather) jaxbUnmarshaller.unmarshal(url);
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(null, "Errore nella richiesta http(previsione-ip)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			JOptionPane.showMessageDialog(null, "Errore nella lettura XML(previsione-ip)", "Errore", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
 	
-	public Previsione(String latitudine, String longitudine) {
+	//previsione località (nome)
+	public Previsione(String localita) {
 		try {
-			URL file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml&lat=" + latitudine + "&lon=" + longitudine + "&cnt=8&units=metric&lang=it&appid=42b223d0b7441d97bd051375c1c1f0a1");
-			JAXBContext jaxbContext =JAXBContext.newInstance(Weather.class);
+			URL file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml"
+					+ "&q=" + localita
+					+ "&units=metric"
+					+ "&lang=it"
+					+ "&appid=" + OPEN_WEATHER_KEY);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			previsione = (Weather) jaxbUnmarshaller.unmarshal(file);
 		} catch (MalformedURLException e) {
-			JOptionPane.showMessageDialog(null, "Errore nella richiesta http", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Errore nella richiesta http(previsione-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (JAXBException e) {
-			JOptionPane.showMessageDialog(null, "Errore nella lettura XML", "Errore", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Errore nella lettura XML(previsione-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	//previsione località (coordinate)
+	public Previsione(String lat, String lon) {
+		try {
+			URL file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml"
+					+ "&lat=" + lat
+					+ "&lon=" + lon
+					+ "&units=metric"
+					+ "&lang=it"
+					+ "&cnt=8"
+					+ "&appid=" + OPEN_WEATHER_KEY);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			previsione = (Weather) jaxbUnmarshaller.unmarshal(file);
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(null, "Errore nella richiesta http(previsione-coord)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			JOptionPane.showMessageDialog(null, "Errore nella lettura XML(previsione-coord)", "Errore", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}
