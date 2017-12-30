@@ -58,6 +58,7 @@ public class Previsione {
 					+ "&q=" + localita
 					+ "&units=metric"
 					+ "&lang=it"
+					+ "&cnt=8"
 					+ "&appid=" + OPEN_WEATHER_KEY);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
