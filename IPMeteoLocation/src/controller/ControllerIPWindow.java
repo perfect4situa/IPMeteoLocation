@@ -101,6 +101,10 @@ public class ControllerIPWindow implements ActionListener, WindowListener {
 			{
 				new ControllerMeteoWindow(new Previsione(location.getLat(), location.getLon()), new MeteoWindow());
 			}
+			else
+			{
+				new ControllerMeteoWindow(new Previsione(), new MeteoWindow());
+			}
 		}
 		
 	}
