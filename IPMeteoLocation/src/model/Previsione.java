@@ -41,7 +41,7 @@ public class Previsione {
 					+ "&lon=" + lon
 					+ "&units=metric"
 					+ "&lang=it"
-					+ "&cnt=8"
+					+ "&cnt=24"
 					+ "&appid=" + OPEN_WEATHER_KEY);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -83,7 +83,7 @@ public class Previsione {
 					+ "&lon=" + lon
 					+ "&units=metric"
 					+ "&lang=it"
-					+ "&cnt=8"
+					+ "&cnt=24"
 					+ "&appid=" + OPEN_WEATHER_KEY);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -105,7 +105,7 @@ public class Previsione {
 					+ "&lon=" + lon
 					+ "&units=metric"
 					+ "&lang=it"
-					+ "&cnt=8"
+					+ "&cnt=24"
 					+ "&appid=" + OPEN_WEATHER_KEY);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
