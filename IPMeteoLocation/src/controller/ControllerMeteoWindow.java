@@ -1,9 +1,16 @@
 package controller;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -12,17 +19,19 @@ import model.Weather.Forecast.Time;
 import model.Weather.Location;
 import view.MeteoWindow;
 
-public class ControllerMeteoWindow implements ActionListener {
+public class ControllerMeteoWindow implements ActionListener, WindowListener {
 	
 	private Previsione model;
 	private MeteoWindow view;
 	private int index;
 	
 	public ControllerMeteoWindow(Previsione model, MeteoWindow view) {
+		view.getBtnRelative().addActionListener(this);
 		view.getBtnIndietro().addActionListener(this);
 		view.getBtnAvanti().addActionListener(this);
 		view.getBtnEsci().addActionListener(this);
 		view.getBtnMeteo().addActionListener(this);
+		view.addWindowListener(this);
 		
 		view.setVisible(true);
 		
@@ -124,6 +133,20 @@ public class ControllerMeteoWindow implements ActionListener {
 
 	public void actionPerformed(ActionEvent arg0) {
 		
+		if(arg0.getSource() == view.getBtnRelative()) {
+			JOptionPane.showMessageDialog(view, "<html>Le informazioni meteorologiche sono fornite da <a href=\"http://openweathermap.org/\">Open Weather Map</a>*<br>*I dati potrebbero non essere precisi</html>", "Info", JOptionPane.INFORMATION_MESSAGE);
+			
+			if (Desktop.isDesktopSupported()) {
+		        try {
+					Desktop.getDesktop().browse(new URI("http://openweathermap.org"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		if(arg0.getSource() == view.getBtnIndietro()) {
 			this.aggiornaGrafica(-1);
 		}
@@ -139,14 +162,16 @@ public class ControllerMeteoWindow implements ActionListener {
 				view.setEnabled(false);
 				view.setVisible(false);
 				view.dispose();
+			} else {
+				view.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			}
 		}
 		
 		if(arg0.getSource() == view.getBtnMeteo()) {
 			String where = JOptionPane.showInputDialog(view, "Digita il nome di una città", "Cerca meteo", JOptionPane.OK_CANCEL_OPTION);
 			
-			if(where.equals("") || where == null) {
-				if(where.equals("")) {
+			if(where == null || where.equals("")) {
+				if(where != null) {
 					JOptionPane.showMessageDialog(view, "Digita il nome di una città e riprova", "Errore", JOptionPane.INFORMATION_MESSAGE);
 				}
 			} else {
@@ -157,6 +182,36 @@ public class ControllerMeteoWindow implements ActionListener {
 			}
 		}
 		
+	}
+
+	public void windowActivated(WindowEvent e) {
+	}
+
+	public void windowClosed(WindowEvent e) {
+	}
+
+	public void windowClosing(WindowEvent e) {
+		boolean flag = JOptionPane.showConfirmDialog(view, "Vuoi veramente uscire?", "Esci", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION ? true : false;
+		
+		if(flag) {
+			view.setEnabled(false);
+			view.setVisible(false);
+			view.dispose();
+		} else {
+			view.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		}
+	}
+
+	public void windowDeactivated(WindowEvent e) {
+	}
+
+	public void windowDeiconified(WindowEvent e) {
+	}
+
+	public void windowIconified(WindowEvent e) {
+	}
+
+	public void windowOpened(WindowEvent e) {
 	}
 	
 }
