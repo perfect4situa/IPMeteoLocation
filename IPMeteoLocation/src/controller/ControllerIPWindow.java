@@ -28,6 +28,7 @@ public class ControllerIPWindow implements ActionListener, WindowListener {
 	public ControllerIPWindow(IPWindow finestraIP)
 	{
 		finestraIP.setActionListener(this);
+		finestraIP.addWindowListener(this);
 		
 		this.finestraIP = finestraIP;
 		this.location = null;
