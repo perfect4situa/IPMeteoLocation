@@ -39,40 +39,39 @@ public class IPWindow extends JFrame {
 	private JPanel panel_3;
 	private JLabel lblNewLabel_3;
 
-	/**
-	 * Create the frame.
-	 */
 	public IPWindow() {
+		setTitle("IP Location");
+		setResizable(false);
 		this.getSetFrameIcon();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 630, 400);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		this.contentPane.setLayout(null);
+		contentPane.setLayout(null);
 		
-		this.btnMyIp = new JButton("Cerca il mio IP");
-		this.btnMyIp.setBounds(10, 11, 115, 35);
-		this.contentPane.add(this.btnMyIp);
+		btnMyIp = new JButton("Cerca il mio IP");
+		btnMyIp.setBounds(10, 11, 115, 35);
+		contentPane.add(btnMyIp);
 		
-		this.formattedTextField = new JFormattedTextField(createFormatter("###.###.###.###"));
+		formattedTextField = new JFormattedTextField(createFormatter("###.###.###.###"));
 		formattedTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		this.formattedTextField.setBounds(190, 11, 235, 35);
-		this.contentPane.add(this.formattedTextField);
+		formattedTextField.setBounds(190, 11, 235, 35);
+		contentPane.add(formattedTextField);
 		
-		this.btnCerca = new JButton("Cerca");
-		this.btnCerca.setBounds(489, 11, 115, 35);
-		this.contentPane.add(this.btnCerca);
+		btnCerca = new JButton("Cerca");
+		btnCerca.setBounds(489, 11, 115, 35);
+		contentPane.add(btnCerca);
 		
-		this.label = new JLabel("");
+		label = new JLabel("");
 		label.setForeground(Color.DARK_GRAY);
 		label.setBorder(BorderFactory.createLineBorder(Color.black));
-		this.label.setBounds(20, 65, 345, 285);
-		this.contentPane.add(this.label);
+		label.setBounds(20, 65, 345, 285);
+		contentPane.add(label);
 		
-		this.btnMeteo = new JButton("Meteo");
-		this.btnMeteo.setBounds(422, 315, 115, 35);
-		this.contentPane.add(this.btnMeteo);
+		btnMeteo = new JButton("Meteo");
+		btnMeteo.setBounds(422, 315, 115, 35);
+		contentPane.add(btnMeteo);
 		
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Citt\u00E0", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
@@ -108,22 +107,22 @@ public class IPWindow extends JFrame {
 		lblNewLabel_2.setBounds(10, 15, 186, 30);
 		panel_2.add(lblNewLabel_2);
 		
-		this.panel_3 = new JPanel();
-		this.panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Provider", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
-		this.panel_3.setBounds(375, 239, 206, 46);
-		this.contentPane.add(this.panel_3);
-		this.panel_3.setLayout(null);
+		panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Provider", TitledBorder.CENTER, TitledBorder.ABOVE_TOP, null, new Color(0, 0, 0)));
+		panel_3.setBounds(375, 239, 206, 46);
+		contentPane.add(panel_3);
+		panel_3.setLayout(null);
 		
-		this.lblNewLabel_3 = new JLabel("");
-		this.lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		this.lblNewLabel_3.setBounds(10, 15, 186, 30);
-		this.panel_3.add(this.lblNewLabel_3);
+		lblNewLabel_3 = new JLabel("");
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setBounds(10, 15, 186, 30);
+		panel_3.add(lblNewLabel_3);
 		
 		this.clearInput();
 		
-		this.setVisible(true);
+		setVisible(true);
 	}
-
+	
 	public JButton getBtnMyIp() {
 		return btnMyIp;
 	}
@@ -163,16 +162,6 @@ public class IPWindow extends JFrame {
 	public void setBtnMeteo(JButton btnMeteo) {
 		this.btnMeteo = btnMeteo;
 	}
-	
-	
-	
-	public JLabel getLblNewLabel_3() {
-		return lblNewLabel_3;
-	}
-
-	public void setLblNewLabel_3(JLabel lblNewLabel_3) {
-		this.lblNewLabel_3 = lblNewLabel_3;
-	}
 
 	public JLabel getLblNewLabel() {
 		return lblNewLabel;
@@ -197,12 +186,24 @@ public class IPWindow extends JFrame {
 	public void setLblNewLabel_2(JLabel lblNewLabel_2) {
 		this.lblNewLabel_2 = lblNewLabel_2;
 	}
-	
-	public void getSetFrameIcon() {
-		try {
+
+	public JLabel getLblNewLabel_3() {
+		return lblNewLabel_3;
+	}
+
+	public void setLblNewLabel_3(JLabel lblNewLabel_3) {
+		this.lblNewLabel_3 = lblNewLabel_3;
+	}
+
+	public void getSetFrameIcon()
+	{
+		try
+		{
 			URL url = new URL("https://ipapi.co/static/images/favicon.34f0ec468301.png");
 			this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
-		} catch (MalformedURLException e) {
+		}
+		catch (MalformedURLException e)
+		{
 			JOptionPane.showMessageDialog(this, "Non è stato possibile recuperare l'icona della finestra", "Errore", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
@@ -231,4 +232,5 @@ public class IPWindow extends JFrame {
 	{
 		this.formattedTextField.setText("000.000.000.000");
 	}
+	
 }
