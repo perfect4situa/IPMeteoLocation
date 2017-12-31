@@ -5,11 +5,6 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-
-import model.Geocode;
 import model.Previsione;
 
 import javax.swing.ImageIcon;
@@ -23,7 +18,6 @@ import java.net.URL;
 public class MeteoWindow extends JFrame {
 
 	private static final long serialVersionUID = 3146247893939891820L;
-	private static final String GEOCODE_KEY = "AIzaSyCkBK1uTNhXgGksQiHic__WgZn6E7K_fyw";
 	private static final String MAP_KEY = "AIzaSyCelP-ihyvYsZsK1IM7qJ_drIWMlaOptw8";
 	private JPanel contentPane;
 	private JPanel panelMeteo;
@@ -41,6 +35,7 @@ public class MeteoWindow extends JFrame {
 	private JButton btnAvanti;
 	private JButton btnEsci;
 	private JButton btnMeteo;
+	private JButton btnRelative;
 
 	public MeteoWindow() {
 		this.getSetFrameIcon();
@@ -49,6 +44,7 @@ public class MeteoWindow extends JFrame {
 		setAlwaysOnTop(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 609, 527);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -57,6 +53,11 @@ public class MeteoWindow extends JFrame {
 		panelMeteo.setBounds(0, 0, 603, 492);
 		contentPane.add(panelMeteo);
 		panelMeteo.setLayout(null);
+		
+		btnRelative = new JButton("");
+		btnRelative.setBounds(549, 13, 40, 40);
+		this.getSetInfoIcon();
+		panelMeteo.add(btnRelative);
 		
 		lblInfo = new JLabel("*info*");
 		lblInfo.setFont(new Font("Impact", Font.PLAIN, 30));
@@ -157,6 +158,14 @@ public class MeteoWindow extends JFrame {
 		this.lblBackground = lblBackground;
 	}
 
+	public JButton getBtnRelative() {
+		return btnRelative;
+	}
+
+	public void setBtnRelative(JButton btnRelative) {
+		this.btnRelative = btnRelative;
+	}
+
 	public JLabel getLblInfo() {
 		return lblInfo;
 	}
@@ -245,10 +254,19 @@ public class MeteoWindow extends JFrame {
 		this.btnMeteo = btnMeteo;
 	}
 	
-	public void getSetFrameIcon() {
+	private void getSetFrameIcon() {
 		try {
 			URL url = new URL("https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/icons/logo_16x16.png");
 			this.setIconImage(Toolkit.getDefaultToolkit().createImage(url));
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(this, "Non è stato possibile recuperare l'icona della finestra", "Errore", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	
+	private void getSetInfoIcon() {
+		try {
+			URL url = new URL("https://cdn0.iconfinder.com/data/icons/typicons-2/24/info-large-32.png");
+			this.btnRelative.setIcon((new ImageIcon(url)));
 		} catch (MalformedURLException e) {
 			JOptionPane.showMessageDialog(this, "Non è stato possibile recuperare l'icona della finestra", "Errore", JOptionPane.INFORMATION_MESSAGE);
 		}
@@ -294,34 +312,15 @@ public class MeteoWindow extends JFrame {
 		}
 	}
 	
-	public void getSetBackground(Previsione model) {
-		Geocode location = null;
-		try	{
-			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/xml?"
-					+ "address="
-					+ model.getPrevisione().getLocation().getName()
-					+ ","
-					+ model.getPrevisione().getLocation().getCountry()
-					+ "&key=" + GEOCODE_KEY);
-			JAXBContext jaxbContext = JAXBContext.newInstance(Geocode.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			location = (Geocode) jaxbUnmarshaller.unmarshal(url);
-		} catch (MalformedURLException e) {
-			JOptionPane.showMessageDialog(this, "Errore nella richiesta http(background-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			JOptionPane.showMessageDialog(this, "Errore nella lettura XML(background-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
-		
+	public void getSetBackground(Previsione model) {		
 		try {
 			URL url = new URL("https://maps.googleapis.com/maps/api/staticmap?"
 					+ "center="
-					+ location.getResult().getGeometry().getLocation().getLat()
+					+ model.getLat()
 					+ ","
-					+ location.getResult().getGeometry().getLocation().getLng()
+					+ model.getLon()
 					+ "&size=" + this.lblBackground.getSize().width +  "x" + this.lblBackground.getSize().height
-					+ "&zoom=10"
+					+ "&zoom=9"
 					+ "&maptype=roadmap"
 					+ "&key=" + MAP_KEY);
 			this.lblBackground.setIcon(new ImageIcon(url));
@@ -330,5 +329,4 @@ public class MeteoWindow extends JFrame {
 			e.printStackTrace();
 		}
 	}
-	
 }
