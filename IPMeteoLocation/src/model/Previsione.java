@@ -11,11 +11,13 @@ import javax.xml.bind.Unmarshaller;
 public class Previsione {
 	
 	private Weather previsione;
+	private String lat;
+	private String lon;
 	private static final String OPEN_WEATHER_KEY = "42b223d0b7441d97bd051375c1c1f0a1";
+	private static final String GEOCODE_KEY = "AIzaSyCkBK1uTNhXgGksQiHic__WgZn6E7K_fyw";
 	
 	//previsione località (IP)
 	public Previsione() {
-		//recupero località IP
 		model.Location location = null;
 		try	{
 			URL url = new URL("http://ip-api.com/xml");
@@ -30,12 +32,14 @@ public class Previsione {
 			e.printStackTrace();
 		}
 		
-		//recupero previsioni (lat, lon)
+		lat = location.getLat();
+		lon = location.getLon();
+		
 		try {
 			URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml"
-					+ "&lat=" + location.getLat()
-					+ "&lon=" + location.getLon()
-					+ "&units=metric" 
+					+ "&lat=" + lat
+					+ "&lon=" + lon
+					+ "&units=metric"
 					+ "&lang=it"
 					+ "&cnt=8"
 					+ "&appid=" + OPEN_WEATHER_KEY);
@@ -53,16 +57,37 @@ public class Previsione {
 	
 	//previsione località (nome)
 	public Previsione(String localita) {
+		Geocode location = null;
+		try	{
+			URL url = new URL("https://maps.googleapis.com/maps/api/geocode/xml?"
+					+ "address="
+					+ localita
+					+ "&key=" + GEOCODE_KEY);
+			JAXBContext jaxbContext = JAXBContext.newInstance(Geocode.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			location = (Geocode) jaxbUnmarshaller.unmarshal(url);
+		} catch (MalformedURLException e) {
+			JOptionPane.showMessageDialog(null, "Errore nella richiesta http(previsione-coord)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (JAXBException e) {
+			JOptionPane.showMessageDialog(null, "Errore nella lettura XML(previsione-coord)", "Errore", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+		lat = location.getResult().getGeometry().getLocation().getLat() + "";
+		lon = location.getResult().getGeometry().getLocation().getLng() + "";
+		
 		try {
-			URL file = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml"
-					+ "&q=" + localita
+			URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?mode=xml"
+					+ "&lat=" + lat
+					+ "&lon=" + lon
 					+ "&units=metric"
 					+ "&lang=it"
 					+ "&cnt=8"
 					+ "&appid=" + OPEN_WEATHER_KEY);
 			JAXBContext jaxbContext = JAXBContext.newInstance(Weather.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			previsione = (Weather) jaxbUnmarshaller.unmarshal(file);
+			previsione = (Weather) jaxbUnmarshaller.unmarshal(url);
 		} catch (MalformedURLException e) {
 			JOptionPane.showMessageDialog(null, "Errore nella richiesta http(previsione-loc)", "Errore", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
@@ -92,8 +117,11 @@ public class Previsione {
 			JOptionPane.showMessageDialog(null, "Errore nella lettura XML(previsione-coord)", "Errore", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
+		
+		this.lat = lat;
+		this.lon = lon;
 	}
-
+	
 	public Weather getPrevisione() {
 		return previsione;
 	}
@@ -102,4 +130,20 @@ public class Previsione {
 		this.previsione = previsione;
 	}
 
+	public String getLat() {
+		return lat;
+	}
+
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+
+	public String getLon() {
+		return lon;
+	}
+
+	public void setLon(String lon) {
+		this.lon = lon;
+	}
+	
 }
